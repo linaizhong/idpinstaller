@@ -1,0 +1,57 @@
+---
+- hosts: localservers
+  tasks:
+    - name: Installs httpd
+      yum: pkg=httpd state=latest
+      notify:
+        - start httpd
+    
+    - name: Installs mod_ssl
+      yum: pkg=mod_ssl state=latest 
+    
+    - name: Installs mysql
+      yum: pkg=mysql state=latest
+    
+    - name: Installs mysql-server
+      yum: pkg=mysql-server state=latest
+      notify:
+      - start mysqld
+    
+    - name: Installs ntp
+      yum: pkg=ntp state=latest
+      notify:
+        - start ntpd
+    
+    - name: Install Java 1.7
+      yum: name=java-1.7.0-openjdk state=latest
+    
+    - name: Install Java 1.7 development package
+      yum: name=java-1.7.0-openjdk-devel state=latest
+    
+    - name: Install ant
+      yum: name=ant state=latest
+    
+    - name: unzip
+      yum: name=unzip state=latest
+
+    - name: Download Tomcat 7.0.42
+      get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.42/bin/apache-tomcat-7.0.42.tar.gz
+                 dest=/opt/apache-tomcat-7.0.42.tar.gz
+    - name: Extract archive
+      command: /bin/tar xvf /opt/apache-tomcat-7.0.42.tar.gz -C /opt/
+        creates=/opt/apache-tomcat-7.0.42
+
+    - name: Add tomcat group
+      group: name=tomcat
+    - name: Add tomcat user
+      user: name=tomcat group=tomcat home=/opt/apache-tomcat-7.0.42
+    - name: Change tomcat permissions
+      file: path=/opt/apache-tomcat-7.0.42/ owner=tomcat group=tomcat state=directory recurse=yes
+    
+  handlers:
+    - name: start httpd
+      service: name=httpd state=started
+    - name: start mysqld
+      service: name=mysqld state=started
+    - name: start ntpd
+      service: name=ntpd state=started
