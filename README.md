@@ -3,13 +3,13 @@ idp-playbook
 
 Ansible playbook to install software needed by Shibboleth IdP
 
-Usage:
+###Usage:
 After clonning the repository, navigate to project root and run:
 ```
 sh ./bootstrap.sh
 ```
 
-Software packages that script will install:
+###Software packages that script will install:
 - httpd
 - mod_ssl
 - mysql
