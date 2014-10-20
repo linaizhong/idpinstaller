@@ -1,0 +1,6 @@
+---
+- name: Install Java 1.7
+  yum: name=java-1.7.0-openjdk state=latest
+
+- name: Install Java 1.7 development package
+  yum: name=java-1.7.0-openjdk-devel state=latest

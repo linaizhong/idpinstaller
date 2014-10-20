@@ -1,36 +1,11 @@
 ---
 - hosts: idp
-  tasks:
-    - include: roles/webserver/tasks/main.yml
-      notify:
-        - start httpd
-    
-    - include: roles/db/tasks/main.yml
-      notify:
-      - start mysqld
-    
-    - include: roles/timeserver/tasks/main.yml
-      notify:
-        - start ntpd
-    
-    - name: Install Java 1.7
-      yum: name=java-1.7.0-openjdk state=latest
-    
-    - name: Install Java 1.7 development package
-      yum: name=java-1.7.0-openjdk-devel state=latest
-    
-    - name: Install ant
-      yum: name=ant state=latest
-    
-    - name: unzip
-      yum: name=unzip state=latest
+  roles:
+     - ant
+     - db
+     - java
+     - jspserver
+     - timeserver
+     - unzip
+     - webserver
 
-    - include: roles/jspserver/tasks/main.yml
-
-  handlers:
-    - name: start httpd
-      service: name=httpd state=started
-    - name: start mysqld
-      service: name=mysqld state=started
-    - name: start ntpd
-      service: name=ntpd state=started
