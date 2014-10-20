@@ -1,19 +1,11 @@
 ---
 - hosts: idp
   tasks:
-    - name: Installs httpd
-      yum: pkg=httpd state=latest
+    - include: roles/webserver/main.yml
       notify:
         - start httpd
     
-    - name: Installs mod_ssl
-      yum: pkg=mod_ssl state=latest 
-    
-    - name: Installs mysql
-      yum: pkg=mysql state=latest
-    
-    - name: Installs mysql-server
-      yum: pkg=mysql-server state=latest
+    - include: roles/db/main.yml
       notify:
       - start mysqld
     
