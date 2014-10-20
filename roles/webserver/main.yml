@@ -1,0 +1,6 @@
+---
+- name: Installs httpd
+  yum: pkg=httpd state=latest
+
+- name: Installs mod_ssl
+  yum: pkg=mod_ssl state=latest

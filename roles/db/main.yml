@@ -1,0 +1,6 @@
+---
+- name: Installs mysql
+  yum: pkg=mysql state=latest
+
+- name: Installs mysql-server
+  yum: pkg=mysql-server state=latest
