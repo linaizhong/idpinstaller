@@ -1,22 +1,21 @@
 idp-playbook
 ============
 
-Ansible playbook to install software needed by Shibboleth IdP
+Installs the latest version of Shibboleth IdP
 
 ###Usage:
-After clonning the repository, navigate to project root and run:
+Download the bootstrap.sh file by executing the following command:
+```
+wget https://raw.githubusercontent.com/j-tan/idp-playbook/master/bootstrap.sh
+```
+Once the file has completed downloading, execute it:
 ```
 sh ./bootstrap.sh
 ```
 
-###Software packages that script will install:
-- httpd
-- mod_ssl
-- mysql
-- mysql-server
-- ntp
-- java-1.7.0-openjdk
-- java-1.7.0-openjdk-devel
-- ant
-- unzip
-- apache-tomcat-7.0.42 (from binary)
+###Services that script will setup:
+- Secure HTTP web server
+- Database server
+- Time synchronisation
+- Java and associated development kits
+- JSP server
