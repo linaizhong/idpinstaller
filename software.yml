@@ -1,15 +1,15 @@
 ---
 - hosts: idp
   tasks:
-    - include: roles/webserver/main.yml
+    - include: roles/webserver/tasks/main.yml
       notify:
         - start httpd
     
-    - include: roles/db/main.yml
+    - include: roles/db/tasks/main.yml
       notify:
       - start mysqld
     
-    - include: roles/timeserver/main.yml
+    - include: roles/timeserver/tasks/main.yml
       notify:
         - start ntpd
     
@@ -25,7 +25,7 @@
     - name: unzip
       yum: name=unzip state=latest
 
-    - include: roles/jspserver/main.yml
+    - include: roles/jspserver/tasks/main.yml
 
   handlers:
     - name: start httpd
