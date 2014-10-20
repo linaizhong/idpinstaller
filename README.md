@@ -18,4 +18,5 @@ sh ./bootstrap.sh
 - java-1.7.0-openjdk
 - java-1.7.0-openjdk-devel
 - ant
-- tomcat 7.0.42 (from binary)
+- unzip
+- apache-tomcat-7.0.42 (from binary)
