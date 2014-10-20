@@ -9,8 +9,7 @@
       notify:
       - start mysqld
     
-    - name: Installs ntp
-      yum: pkg=ntp state=latest
+    - include: roles/timeserver/main.yml
       notify:
         - start ntpd
     
@@ -26,20 +25,8 @@
     - name: unzip
       yum: name=unzip state=latest
 
-    - name: Download Tomcat 7.0.42
-      get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.42/bin/apache-tomcat-7.0.42.tar.gz
-                 dest=/opt/apache-tomcat-7.0.42.tar.gz
-    - name: Extract archive
-      command: /bin/tar xvf /opt/apache-tomcat-7.0.42.tar.gz -C /opt/
-        creates=/opt/apache-tomcat-7.0.42
+    - include: roles/jspserver/main.yml
 
-    - name: Add tomcat group
-      group: name=tomcat
-    - name: Add tomcat user
-      user: name=tomcat group=tomcat home=/opt/apache-tomcat-7.0.42
-    - name: Change tomcat permissions
-      file: path=/opt/apache-tomcat-7.0.42/ owner=tomcat group=tomcat state=directory recurse=yes
-    
   handlers:
     - name: start httpd
       service: name=httpd state=started
