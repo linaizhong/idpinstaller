@@ -8,7 +8,7 @@ Download the bootstrap.sh file by executing the following command:
 ```
 wget https://raw.githubusercontent.com/j-tan/idp-playbook/master/bootstrap.sh
 ```
-Once the file has completed downloading, execute it:
+Once the file has completed downloading, execute it with:
 ```
 sh ./bootstrap.sh
 ```
