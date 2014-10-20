@@ -1,5 +1,5 @@
 ---
-- hosts: localservers
+- hosts: idp
   tasks:
     - name: Installs httpd
       yum: pkg=httpd state=latest
