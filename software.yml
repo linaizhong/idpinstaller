@@ -2,11 +2,11 @@
 - hosts: idp
   roles:
      - ant
+     - apache
      - db
      - java
      - selinux
      - timeserver
      - tomcat
      - unzip
-     - webserver
 
