@@ -4,9 +4,9 @@
      - ant
      - db
      - java
-     - jspserver
      - selinux
      - timeserver
+     - tomcat
      - unzip
      - webserver
 
