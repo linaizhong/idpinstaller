@@ -4,6 +4,7 @@
 
 - name: Installs mysql-server
   yum: pkg=mysql-server state=latest
+  notify: start mysqld
 
 - name: Create /root/mysql_secure_installation.sql
   template: src=mysql_secure_installation.sql.j2 dest=/root/mysql_secure_installation.sql owner=root mode=0600
