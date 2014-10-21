@@ -19,5 +19,5 @@ cp hosts /etc/ansible
 echo "### Installing your IdP... (This may take some time)" \
      | tee -a $wd/install.log
 ansible-playbook software.yml &>>$wd/install.log
-echo "IdP installation complete."
+echo "IdP installation complete." | tee -a $wd/install.log
 echo "For more details, view install.log" | tee -a $wd/install.log
