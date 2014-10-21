@@ -6,6 +6,7 @@ fi
 
 yum -y install epel-release
 yum -y install git
+yum -y install libselinux-python
 yum -y install ansible
 mkdir -p /opt/aaf
 cd /opt/aaf

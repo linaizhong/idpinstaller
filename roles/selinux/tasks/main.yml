@@ -1,7 +1,4 @@
 ---
-- name: Install libselinux-python
-  yum: name=libselinux-python state=latest
-
 - name: Disable SELinux
   shell: echo 0 > /selinux/enforce
 
