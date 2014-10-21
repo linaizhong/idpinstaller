@@ -5,8 +5,8 @@
      - apache
      - db
      - java
+     - ntp
      - selinux
-     - timeserver
      - tomcat
      - unzip
 
