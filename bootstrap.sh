@@ -10,6 +10,7 @@ mkdir -p /opt/aaf
 cd /opt/aaf
 echo "### Installing prerequisite software..." | tee -a $wd/install.log
 yum -y install epel-release &>>$wd/install.log
+yum -y install libselinux-python
 yum -y install git &>>$wd/install.log
 yum -y install ansible &>>$wd/install.log
 git clone https://github.com/ausaccessfed/idpinstaller.git &>>$wd/install.log
