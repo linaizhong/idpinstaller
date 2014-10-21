@@ -7,9 +7,9 @@ fi
 yum -y install epel-release
 yum -y install git
 yum -y install ansible
-mkdir -p /opt/aaf-ansible
+mkdir -p /opt/aaf-installer
 cd /opt/aaf-ansible
-git clone https://github.com/j-tan/idp-playbook.git
-cd idp-playbook
+git https://github.com/ausaccessfed/idpinstaller.git
+cd idp-installer
 cp hosts /etc/ansible
 ansible-playbook software.yml
