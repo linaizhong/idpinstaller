@@ -5,6 +5,7 @@
      - db
      - java
      - jspserver
+     - selinux
      - timeserver
      - unzip
      - webserver
