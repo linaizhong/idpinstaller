@@ -1,9 +1,9 @@
 ---
-- name: Installs mysql
-  yum: pkg=mysql state=latest
+- name: Installs mariadb
+  yum: pkg=mariadb state=latest
 
-- name: Installs mysql-server
-  yum: pkg=mysql-server state=latest
+- name: Installs mariadb-server
+  yum: pkg=mariadb-server state=latest
   notify: start mysqld
 
 - meta: flush_handlers
