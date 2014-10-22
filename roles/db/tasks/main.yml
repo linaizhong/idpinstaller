@@ -1,20 +1,20 @@
 ---
 - name: Installs mariadb
   yum: pkg=mariadb state=latest
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '7'
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
 
 - name: Installs mysql
   yum: pkg=mysql state=latest
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '6' and ansible_distribution_version < '7'
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '6'
 
 - name: Installs mariadb-server
   yum: pkg=mariadb-server state=latest
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '7'
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
   notify: start mariadb-server
 
 - name: Installs mysql-server
   yum: pkg=mysql-server state=latest
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '6' and ansible_distribution_version < '7'
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '6'
   notify: start mysqld
 
 - meta: flush_handlers
