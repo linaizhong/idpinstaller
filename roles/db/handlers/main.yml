@@ -1,3 +1,6 @@
 ---
-- name: start mysqld
+- name: start mariadb-server
   service: name=mariadb state=started
+
+- name: start mysqld
+  service: name=mysqld state=started

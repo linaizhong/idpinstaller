@@ -1,9 +1,20 @@
 ---
 - name: Installs mariadb
   yum: pkg=mariadb state=latest
+  when: ansible_os_family = "RedHat" and ansible_lsb.major_release|int >= 7
+
+- name: Installs mysql
+  yum: pkg=mysql state=latest
+  when: ansible_os_family = "RedHat" and ansible_lsb.major_release|int >= 6 and ansible_lsb.major_release|int < 7
 
 - name: Installs mariadb-server
   yum: pkg=mariadb-server state=latest
+  when: ansible_os_family = "RedHat" and ansible_lsb.major_release|int >= 7
+  notify: start mariadb-server
+
+- name: Installs mysql-server
+  yum: pkg=mysql-server state=latest
+  when: ansible_os_family = "RedHat" and ansible_os_family.major_release|int >= 6 and ansible_os_family.major_release|int < 7
   notify: start mysqld
 
 - meta: flush_handlers
