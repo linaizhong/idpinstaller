@@ -1,6 +1,3 @@
 ---
-- name: Disable SELinux
-  shell: echo 0 > /selinux/enforce
-
 - name: Switch SELinux to permissive mode
   selinux: state=permissive policy=targeted
