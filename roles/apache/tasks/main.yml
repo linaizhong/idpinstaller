@@ -5,3 +5,5 @@
 - name: Installs mod_ssl
   yum: pkg=mod_ssl state=latest
   notify: start httpd
+
+- meta: flush_handlers
