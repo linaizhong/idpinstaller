@@ -6,7 +6,6 @@
      - db
      - java
      - ntp
-     - selinux
      - tomcat
      - unzip
 
