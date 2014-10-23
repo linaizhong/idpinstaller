@@ -22,7 +22,7 @@
 - name: Create /root/mysql_secure_installation.sql
   template: src=mysql_secure_installation.sql.j2 dest=/root/mysql_secure_installation.sql owner=root mode=0600
   when: password.changed
-  register: security_sql.changed
+  register: security_sql
 
 - name: Run /root/mysql_secure_installation.sql
   command: 'mysql -e "source /root/mysql_secure_installation.sql"'
