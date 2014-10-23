@@ -10,8 +10,23 @@
 
 - meta: flush_handlers
 
+- name: Generate password
+  shell: openssl rand -base64 27 | tr '+/' '-_' > /root/.mysql_password creates=/root/.mysql_password
+  register: password
+
+- name: Retrieve password
+  command: cat /root/.mysql_password
+  changed_when: false
+  register: mariadb_password_output
+
 - name: Create /root/mysql_secure_installation.sql
   template: src=mysql_secure_installation.sql.j2 dest=/root/mysql_secure_installation.sql owner=root mode=0600
+  when: password.changed
+  register: security_sql.changed
 
 - name: Run /root/mysql_secure_installation.sql
   command: 'mysql -e "source /root/mysql_secure_installation.sql"'
+  when: security_sql.changed
+
+- name: Create /root/.my.cnf
+  template: src=dot-my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
