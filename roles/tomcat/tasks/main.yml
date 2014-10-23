@@ -8,7 +8,7 @@
         creates=/opt/apache-tomcat-7.0.42
 
 - name: Delete default apps
-  command: rm -r /opt/apache-tomcat-7.0.42/webapps/*
+  shell: rm -r /opt/apache-tomcat-7.0.42/webapps/*
 
 - name: Add tomcat group
   group: name=tomcat
