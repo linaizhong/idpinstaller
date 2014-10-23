@@ -1,4 +1,4 @@
-idp-playbook
+idpinstaller
 ============
 
 Installs the latest version of Shibboleth IdP

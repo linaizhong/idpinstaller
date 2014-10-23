@@ -1,6 +1,32 @@
 ---
-- name: Installs mysql
-  yum: pkg=mysql state=latest
+- name: Installs mariadb
+  yum: pkg=mariadb state=latest
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
 
-- name: Installs mysql-server
-  yum: pkg=mysql-server state=latest
+- name: Installs mariadb-server
+  yum: pkg=mariadb-server state=latest
+  when: ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
+  notify: start mariadb-server
+
+- meta: flush_handlers
+
+- name: Generate password
+  shell: openssl rand -base64 27 | tr '+/' '-_' > /root/.mysql_password creates=/root/.mysql_password
+  register: password
+
+- name: Retrieve password
+  command: cat /root/.mysql_password
+  changed_when: false
+  register: mariadb_password_output
+
+- name: Create /root/mysql_secure_installation.sql
+  template: src=mysql_secure_installation.sql.j2 dest=/root/mysql_secure_installation.sql owner=root mode=0600
+  when: password.changed
+  register: security_sql
+
+- name: Run /root/mysql_secure_installation.sql
+  command: 'mysql -e "source /root/mysql_secure_installation.sql"'
+  when: security_sql.changed
+
+- name: Create /root/.my.cnf
+  template: src=dot-my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
