@@ -8,7 +8,13 @@
         creates=/opt/apache-tomcat-7.0.42
 
 - name: Delete default apps
-  shell: rm -r /opt/apache-tomcat-7.0.42/webapps/*
+  file: src=/opt/apache-tomcat-7.0.42/webapps/{{ item }} state=absent
+  with_items:
+    - docs
+    - examples
+    - host-manager
+    - manager
+    - ROOT
 
 - name: Add tomcat group
   group: name=tomcat
