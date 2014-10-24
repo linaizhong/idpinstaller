@@ -7,6 +7,15 @@
   command: /bin/tar xvf /opt/apache-tomcat-7.0.42.tar.gz -C /opt/
         creates=/opt/apache-tomcat-7.0.42
 
+- name: Delete default apps
+  file: path=/opt/apache-tomcat-7.0.42/webapps/{{ item }} state=absent
+  with_items:
+    - docs
+    - examples
+    - host-manager
+    - manager
+    - ROOT
+
 - name: Add tomcat group
   group: name=tomcat
 - name: Add tomcat user
