@@ -4,6 +4,40 @@
 
 - name: Installs mod_ssl
   yum: pkg=mod_ssl state=latest
+
+- name: Create virtual host parent directory
+  file: name=/var/www/vhosts state=directory owner=root group=root mode=0755
+
+- name: Remove default /etc/httpd/conf.d/ files
+  copy: >
+    src=config-blocker.conf dest=/etc/httpd/conf.d/{{item}}
+    owner=root group=root mode=0600
+  with_items:
+  - ssl.conf
+  - welcome.conf
+  - fastcgi.conf
+  - php.conf
+  - README
   notify: start httpd
 
-- meta: flush_handlers
+- name: Create configuration directories
+  file: name=/etc/httpd/{{item}} owner=root group=root mode=0755 state=directory
+  with_items:
+  - ports.d
+
+- name: Write /etc/httpd/conf/httpd.conf
+  template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
+  notify: restart httpd
+
+- name: Write localhost status port config
+  template: src=apache-port-80.conf.j2 dest=/etc/httpd/ports.d/127.0.0.1:80.conf
+  notify: restart httpd
+
+- name: Copy file
+  copy: src={{item}} dest=/etc/httpd/{{item}} owner=root group=root mode=0644
+  with_items:
+  - conf.d/ssl.conf.include
+  notify: restart httpd
+
+- name: Enable service startup
+  service: name=httpd enabled=yes
