@@ -39,6 +39,8 @@ ErrorLog logs/error_log
 Include ports.d/*.conf
 Include conf.d/*.conf
 Include conf.modules.d/00-mpm.conf
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule mime_module modules/mod_mime.so
 
 <IfModule mod_userdir.c>
     UserDir disabled
