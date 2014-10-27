@@ -36,14 +36,14 @@
 - name: Disable unnecessary modules
   lineinfile: dest=/etc/httpd/conf.modules.d/00-base.conf state=absent regexp={{item}}
   with_items:
-  - '^LoadModule status_module'
-  - '^LoadModule info_module'
-  - '^LoadModule autoindex_module'
-  - '^LoadModule include_module'
-  - '^LoadModule userdir_module'
-  - '^LoadModule env_module'
-  - '^LoadModule negotiation_module'
-  - '^LoadModule actions_module'
+  - "LoadModule status_module modules/mod_status.so"
+  - "LoadModule info_module modules/mod_info.so"
+  - "LoadModule autoindex_module modules/mod_autoindex.so"
+  - "LoadModule include_module modules/mod_include.so"
+  - "LoadModule userdir_module modules/mod_userdir.so"
+  - "LoadModule env_module modules/mod_env.so"
+  - "LoadModule negotiation_module modules/mod_negotiation.so"
+  - "LoadModule actions_module modules/mod_actions.so"
   notify: restart httpd
 
 - name: Copy file
