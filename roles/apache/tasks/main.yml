@@ -43,5 +43,9 @@
   - conf.d/ssl.conf.include
   notify: restart httpd
 
+- name: Disable autoindex
+  copy: src=autoindex.conf dest=/etc/httpd/conf.d/autoindex.conf
+  notify: restart httpd
+
 - name: Enable service startup
   service: name=httpd enabled=yes
