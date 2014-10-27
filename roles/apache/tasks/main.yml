@@ -33,19 +33,17 @@
   template: src=apache-port-80.conf.j2 dest=/etc/httpd/ports.d/127.0.0.1:80.conf
   notify: restart httpd
 
-- meta: flush_handlers
-
 - name: Disable unnecessary modules
-  apache2_module: state=absent name={{item}}
+  lineinfile: dest=/etc/httpd/conf.modules.d/00-base.conf state=absent regexp={{item}}
   with_items:
-  - mod_status
-  - mod_info
-  - mod_autoindex
-  - mod_include
-  - mod_userdir
-  - mod_env
-  - mod_negotiation
-  - mod_actions
+  - '^LoadModule status_module'
+  - '^LoadModule info_module'
+  - '^LoadModule autoindex_module'
+  - '^LoadModule include_module'
+  - '^LoadModule userdir_module'
+  - '^LoadModule env_module'
+  - '^LoadModule negotiation_module'
+  - '^LoadModule actions_module'
 
 - name: Copy file
   copy: src={{item}} dest=/etc/httpd/{{item}} owner=root group=root mode=0644
