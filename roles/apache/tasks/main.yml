@@ -38,14 +38,14 @@
 - name: Disable unnecessary modules
   apache2_module: state=absent name={{item}}
   with_items:
-  - status_module
-  - info_module
-  - autoindex_module
-  - include_module
-  - userdir_module
-  - env_module
-  - negotiation_module
-  - actions_module
+  - mod_status
+  - mod_info
+  - mod_autoindex
+  - mod_include
+  - mod_userdir
+  - mod_env
+  - mod_negotiation
+  - mod_actions
 
 - name: Copy file
   copy: src={{item}} dest=/etc/httpd/{{item}} owner=root group=root mode=0644
