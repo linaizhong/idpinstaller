@@ -41,6 +41,7 @@ Include conf.d/*.conf
 Include conf.modules.d/00-mpm.conf
 Include conf.modules.d/00-base.conf
 Include conf.modules.d/00-systemd.conf
+Include conf.modules.d/00-ssl.conf
 
 <IfModule mod_userdir.c>
     UserDir disabled
@@ -82,23 +83,6 @@ AddType application/x-pkcs7-crl    .crl
 
   </IfModule>
 </IfModule>
-
-BrowserMatch "Mozilla/2" nokeepalive
-BrowserMatch "MSIE 4\.0b2;" nokeepalive downgrade-1.0 force-response-1.0
-BrowserMatch "RealPlayer 4\.0" force-response-1.0
-BrowserMatch "Java/1\.0" force-response-1.0
-BrowserMatch "JDK/1\.0" force-response-1.0
-
-BrowserMatch "Microsoft Data Access Internet Publishing Provider" redirect-carefully
-BrowserMatch "MS FrontPage" redirect-carefully
-BrowserMatch "^WebDrive" redirect-carefully
-BrowserMatch "^WebDAVFS/1.[0123]" redirect-carefully
-BrowserMatch "^gnome-vfs/1.0" redirect-carefully
-BrowserMatch "^XML Spy" redirect-carefully
-BrowserMatch "^Dreamweaver-WebDAV-SCM1" redirect-carefully
-
-BrowserMatch MSIE ie
-Header set X-UA-Compatible "IE=Edge,chrome=1" env=ie
 
 # SSL configuration
 LoadModule ssl_module modules/mod_ssl.so
