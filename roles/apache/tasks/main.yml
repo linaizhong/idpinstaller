@@ -33,6 +33,8 @@
   template: src=apache-port-80.conf.j2 dest=/etc/httpd/ports.d/127.0.0.1:80.conf
   notify: restart httpd
 
+- meta: flush_handlers
+
 - name: Disable unnecessary modules
   apache2_module: state=absent name={{item}}
   with_items:
