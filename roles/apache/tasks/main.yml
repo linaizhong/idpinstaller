@@ -34,7 +34,7 @@
   notify: restart httpd
 
 - name: Disable unnecessary modules
-  lineinfile: dest=/etc/httpd/conf.modules.d/00-base.conf state=absent regexp={{item}}
+  lineinfile: dest=/etc/httpd/conf.modules.d/00-base.conf state=absent line={{item}}
   with_items:
   - "LoadModule status_module modules/mod_status.so"
   - "LoadModule info_module modules/mod_info.so"
