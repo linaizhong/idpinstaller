@@ -49,8 +49,7 @@ Include conf.modules.d/00-systemd.conf
 AccessFileName .htaccess
 
 <Files ~ "^\.ht">
-    Order allow,deny
-    Deny from all
+    Require all denied
     Satisfy All
 </Files>
 
@@ -71,8 +70,7 @@ Alias /error/ "/var/www/error/"
         Options IncludesNoExec
         AddOutputFilter Includes html
         AddHandler type-map var
-        Order allow,deny
-        Allow from all
+        Require all denied
         LanguagePriority en es de fr
         ForceLanguagePriority Prefer Fallback
       </Directory>
