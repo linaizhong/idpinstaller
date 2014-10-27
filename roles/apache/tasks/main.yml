@@ -44,6 +44,7 @@
   - '^LoadModule env_module'
   - '^LoadModule negotiation_module'
   - '^LoadModule actions_module'
+  notify: restart httpd
 
 - name: Copy file
   copy: src={{item}} dest=/etc/httpd/{{item}} owner=root group=root mode=0644
