@@ -33,6 +33,18 @@
   template: src=apache-port-80.conf.j2 dest=/etc/httpd/ports.d/127.0.0.1:80.conf
   notify: restart httpd
 
+- name: Disable unnecessary modules
+  apache2_module: state=absent name={{module}}
+  with_items:
+  - status_module
+  - info_module
+  - autoindex_module
+  - include_module
+  - userdir_module
+  - env_module
+  - negotiation_module
+  - actions_module
+
 - name: Copy file
   copy: src={{item}} dest=/etc/httpd/{{item}} owner=root group=root mode=0644
   with_items:
