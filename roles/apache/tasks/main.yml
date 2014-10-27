@@ -34,7 +34,7 @@
   notify: restart httpd
 
 - name: Disable unnecessary modules
-  apache2_module: state=absent name={{module}}
+  apache2_module: state=absent name={{item}}
   with_items:
   - status_module
   - info_module
