@@ -36,6 +36,7 @@ LogFormat "%{User-agent}i" agent
 CustomLog logs/access_log combined
 ErrorLog logs/error_log
 
+LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
 Include ports.d/*.conf
 Include conf.d/*.conf
 Include conf.modules.d/00-mpm.conf
