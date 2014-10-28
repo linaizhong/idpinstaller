@@ -33,10 +33,18 @@
   template: src=apache-port-80.conf.j2 dest=/etc/httpd/ports.d/127.0.0.1:80.conf
   notify: restart httpd
 
+- name: Disable unnecessary modules
+  copy: src=00-base.conf dest=/etc/httpd/conf.modules.d/00-base.conf
+  notify: restart httpd
+
 - name: Copy file
   copy: src={{item}} dest=/etc/httpd/{{item}} owner=root group=root mode=0644
   with_items:
   - conf.d/ssl.conf.include
+  notify: restart httpd
+
+- name: Disable autoindex
+  copy: src=autoindex.conf dest=/etc/httpd/conf.d/autoindex.conf
   notify: restart httpd
 
 - name: Enable service startup
