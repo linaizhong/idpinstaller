@@ -37,6 +37,9 @@ CustomLog logs/access_log combined
 ErrorLog logs/error_log
 
 LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+LoadModule proxy_http_module modules/mod_proxy_http.so
 Include ports.d/*.conf
 Include conf.d/*.conf
 Include conf.modules.d/00-mpm.conf
@@ -86,8 +89,6 @@ AddType application/x-pkcs7-crl    .crl
 </IfModule>
 
 # SSL configuration
-LoadModule ssl_module modules/mod_ssl.so
-
 SSLPassPhraseDialog  exec:/bin/false
 SSLSessionCache         shmcb:/var/cache/mod_ssl/scache(512000)
 SSLSessionCacheTimeout  300
@@ -97,6 +98,24 @@ SSLRandomSeed connect file:/dev/urandom 512
 SSLCryptoDevice builtin
 
 ExtendedStatus On
+
+Listen 443
+
+<VirtualHost _default_:443>
+  ServerName localhost.localdomain.com
+  SSLEngine on
+  SSLProtocol all -SSLv2
+  SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+  SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+  SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+
+  ProxyRequests Off
+  <Proxy ajp://localhost:8009>
+    Require all granted
+  </Proxy>
+
+  ProxyPass / ajp://localhost:8009/webapp
+</VirtualHost>
 
 <VirtualHost 127.0.0.1:80>
   <Location /mod_status>
