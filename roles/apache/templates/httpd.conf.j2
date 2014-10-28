@@ -98,6 +98,24 @@ SSLCryptoDevice builtin
 
 ExtendedStatus On
 
+Listen 443
+
+<VirtualHost _default_:443>
+  ServerName localhost.localdomain.com
+  SSLEngine on
+  SSLProtocol all -SSLv2
+  SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+  SSLCertificateFile /root/certs/cert.pem
+  SSLCertificateKeyFile /root/certs/key.pem
+
+  ProxyRequests Off
+  <Proxy ajp://localhost:8009>
+    Require all granted
+  </Proxy>
+
+  ProxyPass / ajp://localhost:8009/webapp
+</VirtualHost>
+
 <VirtualHost 127.0.0.1:80>
   <Location /mod_status>
     SetHandler server-status
