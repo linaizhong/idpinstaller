@@ -105,8 +105,8 @@ Listen 443
   SSLEngine on
   SSLProtocol all -SSLv2
   SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
-  SSLCertificateFile /root/certs/cert.pem
-  SSLCertificateKeyFile /root/certs/key.pem
+  SSLCertificateFile /etc/pki/tls/certs/localhost.crt
+  SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
 
   ProxyRequests Off
   <Proxy ajp://localhost:8009>
