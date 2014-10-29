@@ -1,6 +1,6 @@
 ---
 - name: start tomcat
-  shell: systemctl start tomcat.service
+  service: name=tomcat state=started
 
 - name: restart tomcat
-  shell: systemctl restart tomcat.service
+  service: name=tomcat state=restarted
