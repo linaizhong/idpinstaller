@@ -41,7 +41,6 @@ LoadModule alias_module modules/mod_alias.so
 LoadModule proxy_module modules/mod_proxy.so
 LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
 LoadModule proxy_http_module modules/mod_proxy_http.so
-Include ports.d/*.conf
 Include conf.d/*.conf
 Include conf.modules.d/00-mpm.conf
 Include conf.modules.d/00-base.conf
@@ -100,6 +99,7 @@ SSLCryptoDevice builtin
 
 ExtendedStatus On
 
+Listen 80
 Listen 443
 
 <VirtualHost _default_:443>

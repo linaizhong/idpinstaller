@@ -20,17 +20,8 @@
   - README
   notify: start httpd
 
-- name: Create configuration directories
-  file: name=/etc/httpd/{{item}} owner=root group=root mode=0755 state=directory
-  with_items:
-  - ports.d
-
 - name: Write /etc/httpd/conf/httpd.conf
   template: src=httpd.conf.j2 dest=/etc/httpd/conf/httpd.conf
-  notify: restart httpd
-
-- name: Write localhost status port config
-  template: src=apache-port-80.conf.j2 dest=/etc/httpd/ports.d/127.0.0.1:80.conf
   notify: restart httpd
 
 - name: Disable unnecessary modules
