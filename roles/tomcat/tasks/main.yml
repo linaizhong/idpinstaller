@@ -36,7 +36,7 @@
   notify: restart tomcat
 
 - name: Enable tomcat startup on boot
-  shell: systemctl enable tomcat.service
+  service: name=tomcat enabled=yes
 
 - name: Start tomcat
-  shell: systemctl start tomcat.service
+  service: name=tomcat state=started
