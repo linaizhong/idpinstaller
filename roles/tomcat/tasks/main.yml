@@ -22,3 +22,12 @@
   user: name=tomcat group=tomcat home=/opt/apache-tomcat-7.0.42
 - name: Change tomcat permissions
   file: path=/opt/apache-tomcat-7.0.42/ owner=tomcat group=tomcat state=directory recurse=yes
+
+- name: Write /opt/apache-tomcat-7.0.42/conf/server.xml
+  copy: >
+    src=server.xml dest=/opt/apache-tomcat-7.0.42/conf/server.xml
+    owner=root group=root mode=0600
+  notify: restart tomcat
+
+- name: Start tomcat
+  shell: /opt/apache-tomcat-7.0.42/bin/startup.sh
