@@ -22,3 +22,21 @@
   user: name=tomcat group=tomcat home=/opt/apache-tomcat-7.0.42
 - name: Change tomcat permissions
   file: path=/opt/apache-tomcat-7.0.42/ owner=tomcat group=tomcat state=directory recurse=yes
+
+- name: Write /opt/apache-tomcat-7.0.42/conf/server.xml
+  copy: >
+    src=server.xml dest=/opt/apache-tomcat-7.0.42/conf/server.xml
+    owner=tomcat group=tomcat mode=0600
+  notify: restart tomcat
+
+- name: Write /lib/systemd/system/tomcat.service
+  copy: >
+    src=tomcat.service dest=/lib/systemd/system/tomcat.service
+    owner=root mode=644
+  notify: restart tomcat
+
+- name: Enable tomcat startup on boot
+  service: name=tomcat enabled=yes
+
+- name: Start tomcat
+  service: name=tomcat state=started
