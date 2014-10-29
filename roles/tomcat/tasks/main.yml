@@ -26,7 +26,7 @@
 - name: Write /opt/apache-tomcat-7.0.42/conf/server.xml
   copy: >
     src=server.xml dest=/opt/apache-tomcat-7.0.42/conf/server.xml
-    owner=root group=root mode=0600
+    owner=tomcat group=tomcat mode=0600
   notify: restart tomcat
 
 - name: Start tomcat
