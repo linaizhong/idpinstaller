@@ -1,6 +1,6 @@
 ---
 - name: start tomcat
-  shell: /opt/apache-tomcat-7.0.42/bin/startup.sh
+  shell: systemctl start tomcat.service
 
 - name: restart tomcat
-  shell: /opt/apache-tomcat-7.0.42/bin/shutdown.sh; /opt/apache-tomcat-7.0.42/bin/startup.sh
+  shell: systemctl restart tomcat.service

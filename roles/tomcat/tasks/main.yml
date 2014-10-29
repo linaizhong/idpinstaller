@@ -29,5 +29,14 @@
     owner=tomcat group=tomcat mode=0600
   notify: restart tomcat
 
+- name: Write /lib/systemd/system/tomcat.service
+  copy: >
+    src=tomcat.service dest=/lib/systemd/system/tomcat.service
+    owner=root mode=644
+  notify: restart tomcat
+
+- name: Enable tomcat startup on boot
+  shell: systemctl enable tomcat.service
+
 - name: Start tomcat
-  shell: /opt/apache-tomcat-7.0.42/bin/startup.sh
+  shell: systemctl start tomcat.service
