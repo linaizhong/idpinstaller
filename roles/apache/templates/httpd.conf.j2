@@ -102,8 +102,8 @@ ExtendedStatus On
 Listen 80
 Listen 443
 
-<VirtualHost *:443>
-  ServerName localhost.localdomain.com
+<VirtualHost {{ip}}:443>
+  ServerName {{server_name}}
   SSLEngine on
   SSLProtocol all -SSLv2
   SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
@@ -118,13 +118,13 @@ Listen 443
   ProxyPass / ajp://localhost:8009
 </VirtualHost>
 
-<VirtualHost 127.0.0.1:80>
+<VirtualHost {{ip}}:80>
   <Location /mod_status>
     SetHandler server-status
   </Location>
 </VirtualHost>
 
-<VirtualHost *:80>
+<VirtualHost 127.0.0.1:80>
   Redirect permanent / https://localhost.localdomain.com
 </VirtualHost>
 
