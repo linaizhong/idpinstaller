@@ -118,13 +118,13 @@ Listen 443
   ProxyPass / ajp://localhost:8009
 </VirtualHost>
 
-<VirtualHost {{ip}}:80>
+<VirtualHost 127.0.0.1:80>
   <Location /mod_status>
     SetHandler server-status
   </Location>
 </VirtualHost>
 
-<VirtualHost 127.0.0.1:80>
+<VirtualHost {{ip}}:80>
   Redirect permanent / https://localhost.localdomain.com
 </VirtualHost>
 
