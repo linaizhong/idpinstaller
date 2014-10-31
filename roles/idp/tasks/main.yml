@@ -2,10 +2,8 @@
 - include_vars: ../../../IDP-Installer.conf
 
 - name: Download shibboleth IdP
-  get_url: >
-  url=http://www.shibboleth.net/downloads/identity-provider/latest/shibboleth-identityprovider-{{idp_version}}-bin.zip
-  dest=/opt
+  get_url: url=http://www.shibboleth.net/downloads/identity-provider/latest/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt
 
 - name: unzip shibboleth IdP
-  unarchive: src=shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt
+  unarchive: src=/opt/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/
 
