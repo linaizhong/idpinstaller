@@ -4,6 +4,9 @@
 - name: Download shibboleth IdP
   get_url: url=http://www.shibboleth.net/downloads/identity-provider/latest/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt
 
+- name: Create destination directory /opt/aaf/shibsrc
+  file: path=/opt/aaf/shibsrc state=directory
+
 - name: unzip shibboleth IdP
   unarchive: src=/opt/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/
 
