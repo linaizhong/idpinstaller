@@ -1,0 +1,12 @@
+---
+- include_vars: ../../../IDP-Installer.conf
+
+- name: Create destination directory /opt/aaf/shibsrc
+  file: path=/opt/aaf/shibsrc state=directory
+
+- name: Download shibboleth IdP
+  get_url: url=http://www.shibboleth.net/downloads/identity-provider/latest/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf
+
+- name: unzip shibboleth IdP
+  unarchive: src=/opt/aaf/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf/shibsrc
+

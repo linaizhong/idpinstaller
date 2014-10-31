@@ -2,10 +2,11 @@
 - hosts: idp
   roles:
      - ant
+     - unzip
      - apache
      - db
+     - idp
      - java
      - ntp
      - tomcat
-     - unzip
 
