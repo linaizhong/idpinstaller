@@ -125,7 +125,7 @@ Listen 443
 </VirtualHost>
 
 <VirtualHost {{ip}}:80>
-  Redirect permanent / https://localhost.localdomain.com
+  Redirect permanent / https://{{server_name}}
 </VirtualHost>
 
 TraceEnable off
