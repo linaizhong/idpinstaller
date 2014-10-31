@@ -8,5 +8,5 @@
   file: path=/opt/aaf/shibsrc state=directory
 
 - name: unzip shibboleth IdP
-  unarchive: src=/opt/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/
+  unarchive: src=/opt/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf/shibsrc
 
