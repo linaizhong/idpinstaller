@@ -29,6 +29,9 @@
     owner=tomcat group=tomcat mode=0600
   notify: restart tomcat
 
+- name: create tomcat symlink
+  file: /opt/aaf/tomcat state=link src=/opt/{{tomcat_filename}}
+
 - name: Write /lib/systemd/system/tomcat.service
   copy: >
     src=tomcat.service dest=/lib/systemd/system/tomcat.service

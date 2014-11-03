@@ -4,3 +4,6 @@ idp_version: 2.4.2
 # Settings of the idp
 server_name: localhost.localdomain.com
 ip: 192.168.56.201
+
+# Tomcat settings
+tomcat_filename: apache-tomcat-7.0.42
