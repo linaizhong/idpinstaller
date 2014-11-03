@@ -10,3 +10,16 @@
 - name: unzip shibboleth IdP
   unarchive: src=/opt/aaf/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf/shibsrc
 
+- name: Resolve shibboleth IdP keystore password
+  set_fact:
+    idp_storepass: "{{ lookup('password', '/opt/aaf/credentials/' + server_name + '/idp-storepass chars=letters,digits length=64') }}"
+
+- name: Create install script
+  template: >
+    src=install-idp.sh.j2 dest=/opt/aaf/shibsrc/install-{{idp_version}}.sh
+    owner=root group=root mode=0750
+
+- name: Install shibboleth IdP
+  command: >
+    /opt/aaf/shibsrc/install-{{idp_version}}.sh
+    creates=/opt/shibboleth-idp/
