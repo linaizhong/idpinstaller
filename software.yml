@@ -5,8 +5,8 @@
      - unzip
      - apache
      - db
-     - idp
      - java
+     - idp
      - ntp
      - tomcat
 
