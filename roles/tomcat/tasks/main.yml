@@ -30,7 +30,7 @@
   notify: restart tomcat
 
 - name: create tomcat symlink
-  file: path=/opt/aaf/tomcat state=link src=/opt/{{tomcat_filename}}
+  file: path=/opt/tomcat state=link src=/opt/{{tomcat_filename}}
 
 - name: Write /lib/systemd/system/tomcat.service
   copy: >
