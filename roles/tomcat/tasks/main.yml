@@ -1,14 +1,14 @@
 ---
 - name: Download Tomcat 7.0.42
-  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.42/bin/apache-tomcat-7.0.42.tar.gz
-                 dest=/opt/apache-tomcat-7.0.42.tar.gz
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v{{tomcat_version}}/bin/{{tomcat_filename}}-{{tomcat_version}}.tar.gz
+                 dest=/opt/{{tomcat_filename}}-{{tomcat_version}}.tar.gz
 
 - name: Extract archive
-  command: /bin/tar xvf /opt/apache-tomcat-7.0.42.tar.gz -C /opt/
-        creates=/opt/apache-tomcat-7.0.42
+  command: /bin/tar xvf /opt/{{tomcat_filename}}-{{tomcat_version}}.tar.gz -C /opt/
+        creates=/opt/{{tomcat_filename}}-{{tomcat_version}}
 
 - name: Delete default apps
-  file: path=/opt/apache-tomcat-7.0.42/webapps/{{ item }} state=absent
+  file: path=/opt/{{tomcat_filename}}-{{tomcat_version}}/webapps/{{ item }} state=absent
   with_items:
     - docs
     - examples
@@ -19,18 +19,18 @@
 - name: Add tomcat group
   group: name=tomcat
 - name: Add tomcat user
-  user: name=tomcat group=tomcat home=/opt/apache-tomcat-7.0.42
+  user: name=tomcat group=tomcat home=/opt/{{tomcat_filename}}-{{tomcat_version}}
 - name: Change tomcat permissions
-  file: path=/opt/apache-tomcat-7.0.42/ owner=tomcat group=tomcat state=directory recurse=yes
+  file: path=/opt/{{tomcat_filename}}-{{tomcat_version}}/ owner=tomcat group=tomcat state=directory recurse=yes
 
-- name: Write /opt/apache-tomcat-7.0.42/conf/server.xml
+- name: Write /opt/{{tomcat_filename}}-{{tomcat_version}}/conf/server.xml
   copy: >
-    src=server.xml dest=/opt/apache-tomcat-7.0.42/conf/server.xml
+    src=server.xml dest=/opt/{{tomcat_filename}}-{{tomcat_version}}/conf/server.xml
     owner=tomcat group=tomcat mode=0600
   notify: restart tomcat
 
 - name: create tomcat symlink
-  file: path=/opt/tomcat state=link src=/opt/{{tomcat_filename}}
+  file: path=/opt/tomcat state=link src=/opt/{{tomcat_filename}}-{{tomcat_version}}
 
 - name: Write /lib/systemd/system/tomcat.service
   copy: >

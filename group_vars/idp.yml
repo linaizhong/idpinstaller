@@ -6,4 +6,5 @@ server_name: localhost.localdomain.com
 ip: 192.168.56.201
 
 # Tomcat settings
-tomcat_filename: apache-tomcat-7.0.42
+tomcat_filename: apache-tomcat
+tomcat_version: 7.0.42
