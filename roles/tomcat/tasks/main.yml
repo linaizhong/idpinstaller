@@ -1,5 +1,5 @@
 ---
-- name: Download Tomcat 7.0.42
+- name: Download Tomcat
   get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v{{tomcat_version}}/bin/{{tomcat_filename}}-{{tomcat_version}}.tar.gz
                  dest=/opt/{{tomcat_filename}}-{{tomcat_version}}.tar.gz
 
@@ -23,7 +23,7 @@
 - name: Change tomcat permissions
   file: path=/opt/{{tomcat_filename}}-{{tomcat_version}}/ owner=tomcat group=tomcat state=directory recurse=yes
 
-- name: Write /opt/{{tomcat_filename}}-{{tomcat_version}}/conf/server.xml
+- name: Write /opt/tomcat/conf/server.xml
   copy: >
     src=server.xml dest=/opt/{{tomcat_filename}}-{{tomcat_version}}/conf/server.xml
     owner=tomcat group=tomcat mode=0600
