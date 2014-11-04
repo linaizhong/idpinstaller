@@ -24,8 +24,11 @@
     /opt/aaf/shibsrc/install-{{idp_version}}.sh
     creates=/opt/shibboleth-idp/
 
+- name: Change group for /opt/shibboleth-idp directory
+  file: path=/opt/shibboleth-idp/ group=tomcat recurse=yes
+
 - name: Change permissions for /opt/shibboleth-idp directory
-  file: path=/opt/shibboleth-idp/ group=tomcat mode=0755
+  file: path=/opt/shibboleth-idp mode=0755
 
 - name: Symlink endorsed libs into Tomcat endorsed
   file: >
