@@ -38,13 +38,6 @@
 - name: create tomcat symlink
   file: path=/opt/tomcat state=link src=/opt/{{tomcat_filename}}-{{tomcat_version}}
 
-- name: Symlink endorsed libs into Tomcat endorsed
-  file: >
-    path=/opt/tomcat/endorsed
-    src=/opt/aaf/shibsrc/shibboleth-identityprovider-{{idp_version}}/endorsed
-    state=link owner=tomcat group=tomcat
-  notify: restart tomcat
-
 - name: create /opt/tomcat/conf/Catalina/localhost/
   file: path=/opt/tomcat/conf/Catalina/localhost state=directory
 

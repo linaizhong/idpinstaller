@@ -23,3 +23,10 @@
   command: >
     /opt/aaf/shibsrc/install-{{idp_version}}.sh
     creates=/opt/shibboleth-idp/
+
+- name: Symlink endorsed libs into Tomcat endorsed
+  file: >
+    path=/opt/tomcat/endorsed
+    src=/opt/aaf/shibsrc/shibboleth-identityprovider-{{idp_version}}/endorsed
+    state=link owner=tomcat group=tomcat
+  notify: restart tomcat
