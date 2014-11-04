@@ -29,6 +29,12 @@
     owner=tomcat group=tomcat mode=0600
   notify: restart tomcat
 
+- name: Write /opt/tomcat/bin/setenv.sh
+  copy: >
+    src=setenv.sh dest=/opt/{{tomcat_filename}}-{{tomcat_version}}/bin/setenv.sh
+    owner=tomcat group=tomcat mode=0751
+  notify: restart tomcat
+
 - name: create tomcat symlink
   file: path=/opt/tomcat state=link src=/opt/{{tomcat_filename}}-{{tomcat_version}}
 
