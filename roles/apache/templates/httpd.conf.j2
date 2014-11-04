@@ -104,9 +104,8 @@ Listen 443
 
 <VirtualHost {{ip}}:443>
   ServerName {{server_name}}
-  SSLEngine on
-  SSLProtocol all -SSLv2
-  SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+  Include conf.d/ssl.conf.include
+
   SSLCertificateFile /etc/pki/tls/certs/localhost.crt
   SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
 
