@@ -45,6 +45,9 @@
     state=link owner=tomcat group=tomcat
   notify: restart tomcat
 
+- name: create /opt/tomcat/conf/Catalina/localhost/
+  file: path=/opt/tomcat/conf/Catalina/localhost state=directory
+
 - name: Copy idp.xml to /opt/tomcat/conf/Catalina/localhost/
   copy: >
     src=idp.xml dest=/opt/tomcat/conf/Catalina/localhost/
