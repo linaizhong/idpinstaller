@@ -5,7 +5,7 @@
   file: path=/opt/aaf/shibsrc state=directory
 
 - name: Download shibboleth IdP
-  get_url: url=http://www.shibboleth.net/downloads/identity-provider/latest/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf
+  get_url: url=http://www.shibboleth.net/downloads/identity-provider/{{idp_version}}/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf
 
 - name: unzip shibboleth IdP
   unarchive: src=/opt/aaf/shibboleth-identityprovider-{{idp_version}}-bin.zip dest=/opt/aaf/shibsrc
