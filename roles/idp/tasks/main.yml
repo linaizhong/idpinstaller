@@ -24,5 +24,8 @@
     /opt/aaf/shibsrc/install-{{idp_version}}.sh
     creates=/opt/shibboleth-idp/
 
+- name: Create logs directory
+  file: path=/opt/shibboleth-idp/logs owner=root group=tomcat mode=0764 recurse=yes
+
 - name: Change permissions for /opt/shibboleth-idp directory
   file: path=/opt/shibboleth-idp/ owner=root group=tomcat recurse=yes
