@@ -1,5 +1,5 @@
 ---
-idp_version: 2.4.2
+idp_version: 2.4.3
 
 # Settings of the idp
 server_name: localhost.localdomain.com
