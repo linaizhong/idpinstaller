@@ -26,10 +26,3 @@
 
 - name: Change permissions for /opt/shibboleth-idp directory
   file: path=/opt/shibboleth-idp/ owner=root group=tomcat recurse=yes
-
-- name: Symlink endorsed libs into Tomcat endorsed
-  file: >
-    path=/opt/tomcat/endorsed
-    src=/opt/aaf/shibsrc/shibboleth-identityprovider-{{idp_version}}/endorsed
-    state=link owner=tomcat group=tomcat
-  notify: restart tomcat
