@@ -4,6 +4,23 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+ipaddr=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+echo "Do you have an ip address to be used for httpd? (Current: ${ipaddr})"
+select yn in "Yes" "No" "Current"; do
+  case $yn in
+    Yes ) echo "Enter ip address:";
+          read usr_reply
+          if [ $usr_reply != 0 ]; then
+            ipaddr=$usr_reply
+          else
+            echo "Invalid entry"
+          fi
+          break;;
+    No ) echo "Please rerun this script with an ip address"; break;;
+    Current ) echo "Using current detected ip: ${ipaddr}"; break;;
+  esac
+done
+
 wd=$(pwd)
 echo "### Initializing installation..." | tee -a $wd/install.log
 mkdir -p /opt/aaf
