@@ -24,12 +24,14 @@
     /opt/aaf/shibsrc/install-{{idp_version}}.sh
     creates=/opt/shibboleth-idp/
 
+- name: Create logs directory
+  file: path=/opt/shibboleth-idp/logs state=directory owner=root group=tomcat mode=0774 recurse=yes
+
 - name: Change permissions for /opt/shibboleth-idp directory
   file: path=/opt/shibboleth-idp/ owner=root group=tomcat recurse=yes
 
-- name: Symlink endorsed libs into Tomcat endorsed
-  file: >
-    path=/opt/tomcat/endorsed
-    src=/opt/aaf/shibsrc/shibboleth-identityprovider-{{idp_version}}/endorsed
-    state=link owner=tomcat group=tomcat
-  notify: restart tomcat
+- name: Change permissions for /opt/shibboleth-idp/war/idp.war file
+  file: path=/opt/shibboleth-idp/war/idp.war mode=0664
+
+- name: Start tomcat
+  service: name=tomcat state=started
