@@ -5,19 +5,21 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 ipaddr=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-echo "Do you have an ip address to be used for httpd? (Current: ${ipaddr})"
-select yn in "Yes" "No" "Current"; do
+echo "How do you want to configure your ip address for your idp?"
+echo "(Current ip address: ${ipaddr})"
+select yn in "Enter new" "Exit" "Use current"; do
   case $yn in
-    Yes ) echo "Enter ip address:";
-          read usr_reply
-          if [ $usr_reply != 0 ]; then
-            ipaddr=$usr_reply
-          else
-            echo "Invalid entry"
-          fi
-          break;;
-    No ) echo "Please rerun this script with an ip address"; break;;
-    Current ) echo "Using current detected ip: ${ipaddr}"; break;;
+    Enter new) echo "Enter ip address:"
+               read usr_reply
+               if [ $usr_reply != 0 ]; then
+                 ipaddr=$usr_reply
+               else
+                 echo "Invalid entry"
+               fi
+               break;;
+    Exit) exit;;
+    Use current) echo "Using current detected ip: ${ipaddr}"
+                 break;;
   esac
 done
 
