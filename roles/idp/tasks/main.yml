@@ -29,3 +29,6 @@
 
 - name: Change permissions for /opt/shibboleth-idp directory
   file: path=/opt/shibboleth-idp/ owner=root group=tomcat recurse=yes
+
+- name: Start tomcat
+  service: name=tomcat state=started
