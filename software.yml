@@ -6,7 +6,7 @@
      - apache
      - db
      - java
+     - tomcat
      - idp
      - ntp
-     - tomcat
 
