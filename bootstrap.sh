@@ -47,7 +47,7 @@ select opt in "New" "Default"; do
   esac
 done
 
-echo "Select environment type (If no type is selected, Test will be assumed)"
+echo "Select environment type"
 select opt in "Test" "Production"; do
   case $opt in
     Test) echo "Selected Test environment"
