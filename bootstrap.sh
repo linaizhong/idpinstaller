@@ -10,7 +10,7 @@ IDP_VERSION=2.4.3
 
 echo "Enter IdP version or choose default values"
 echo "(Default: ${IDP_VERSION})"
-select opt in "New" "Default"
+select opt in "New" "Default"; do
   case $opt in
     New) echo "Enter version number"
          read usr_reply
