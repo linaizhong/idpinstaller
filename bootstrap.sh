@@ -7,6 +7,7 @@ fi
 SERV_NAME="localhost.localdomain.com"
 IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 IDP_VERSION=2.4.3
+ENVIRONMENT_TYPE="Test"
 
 echo "Enter IdP version or choose default values"
 echo "(Default: ${IDP_VERSION})"
@@ -44,6 +45,18 @@ select opt in "Yes" "No" "Default"; do
     No) exit;;
     Default) echo "Using default server name: ${SERV_NAME}"
              break;;
+  esac
+done
+
+echo "Select environment type (If no type is selected, Test will be assumed"
+select opt in "Test" "Production"; do
+  case $opt in
+    Test) echo "Selected Test environment"
+          ENVIRONMENT_TYPE="Test"
+          break;;
+    Production) echo "Selected Production environment"
+                ENVIRONMENT_TYPE="Production"
+                break;;
   esac
 done
 
