@@ -32,11 +32,11 @@ user_input_str() {
   fi
 }
 
-user_input_str "server name" SERV_NAME $(hostname)
+user_input_str "server name" "SERV_NAME" $(hostname)
 
-user_input "ip address" IP_ADDR $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+user_input "ip address" "IP_ADDR" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 
-user_input_str "environment type" ENVIRONMENT_TYPE "Test"
+user_input_str "environment type" "ENVIRONMENT_TYPE" "Test"
 
 #
 #echo "Enter server name of the server or choose default values"
