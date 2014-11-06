@@ -4,61 +4,82 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-SERV_NAME="localhost.localdomain.com"
+SERV_NAME=$(hostname)
 IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 ENVIRONMENT_TYPE="Test"
 
-echo "Enter server name of the server or choose default values"
-echo "(Default: ${SERV_NAME})"
-select opt in "New" "Default"; do
-  case $opt in
-    New) echo "Enter server name"
-         read usr_reply
-           if [ -n "$usr_reply" ]; then
-             SERV_NAME=$usr_reply
-             echo "Using user supplied value: ${SERV_NAME}"
-           else
-             echo "Invalid entry. Press Enter to try again."
-             continue;
-           fi
-         break;;
-    Default) echo "Using default server name: ${SERV_NAME}"
-             break;;
-  esac
-done
+# arguments are passed to this function in the following order:
+# $1 -> user friendly description of value to be set
+# $2 -> variable name where user input is to be stored
+# $3 -> default value
+user_input() {
+  printf "Enter value for $1 [Current: $3]: "
+  read response
+  if [ $response != 0 ]; then
+    $2 = $response
+  else
+    $2 = $3
+  fi
+}
 
-echo "Select environment type"
-select opt in "Test" "Production"; do
-  case $opt in
-    Test) echo "Selected Test environment"
-          ENVIRONMENT_TYPE="Test"
-          break;;
-    Production) echo "Selected Production environment"
-                ENVIRONMENT_TYPE="Production"
-                break;;
-  esac
-done
+user_input "server name" SERV_NAME $(hostname)
 
-echo "How do you want to configure your ip address for your idp?"
-echo "(Current ip address: ${IP_ADDR})"
-echo "List of ip addresses available:"
-ip addr | awk '/inet / {print$2}' | cut -d/ -f1
-select opt in "New" "Current"; do
-  case $opt in
-    New) echo "Enter ip address:"
-         read usr_reply
-           if [ $usr_reply != 0 ]; then
-             IP_ADDR=$usr_reply
-             echo "Using user supplied value: ${IP_ADDR}"
-           else
-             echo "Invalid entry. Press Enter to try again."
-             continue
-           fi
-         break;;
-    Current) echo "Using current detected ip: ${IP_ADDR}"
-             break;;
-  esac
-done
+user_input "ip address" IP_ADDR $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+
+user_input "environment type" ENVIRONMENT_TYPE "Test"
+
+#
+#echo "Enter server name of the server or choose default values"
+#echo "(Default: ${SERV_NAME})"
+#select opt in "New" "Default"; do
+#  case $opt in
+#    New) echo "Enter server name"
+#         read usr_reply
+#           if [ -n "$usr_reply" ]; then
+#             SERV_NAME=$usr_reply
+#             echo "Using user supplied value: ${SERV_NAME}"
+#           else
+#             echo "Invalid entry. Press Enter to try again."
+#             continue;
+#           fi
+#         break;;
+#    Default) echo "Using default server name: ${SERV_NAME}"
+#             break;;
+#  esac
+#done
+
+#echo "Select environment type"
+#select opt in "Test" "Production"; do
+#  case $opt in
+#    Test) echo "Selected Test environment"
+#          ENVIRONMENT_TYPE="Test"
+#          break;;
+#    Production) echo "Selected Production environment"
+#                ENVIRONMENT_TYPE="Production"
+#                break;;
+#  esac
+#done
+
+#echo "How do you want to configure your ip address for your idp?"
+#echo "(Current ip address: ${IP_ADDR})"
+#echo "List of ip addresses available:"
+#ip addr | awk '/inet / {print$2}' | cut -d/ -f1
+#select opt in "New" "Current"; do
+#  case $opt in
+#    New) echo "Enter ip address:"
+#         read usr_reply
+#           if [ $usr_reply != 0 ]; then
+#             IP_ADDR=$usr_reply
+#             echo "Using user supplied value: ${IP_ADDR}"
+#           else
+#             echo "Invalid entry. Press Enter to try again."
+#             continue
+#           fi
+#         break;;
+#    Current) echo "Using current detected ip: ${IP_ADDR}"
+#             break;;
+#  esac
+#done
 
 wd=$(pwd)
 echo "### Initializing installation..." | tee -a $wd/install.log
