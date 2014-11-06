@@ -6,27 +6,7 @@ fi
 
 SERV_NAME="localhost.localdomain.com"
 IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-IDP_VERSION=2.4.3
 ENVIRONMENT_TYPE="Test"
-
-echo "Enter IdP version or choose default values"
-echo "(Default: ${IDP_VERSION})"
-select opt in "New" "Default"; do
-  case $opt in
-    New) echo "Enter version number"
-         read usr_reply
-           if [ ${usr_reply:-0} != 0 ]; then
-             IDP_VERSION=$usr_reply
-             echo "Using user supplied value: ${IDP_VERSION}"
-           else
-             echo "Invalid entry. Press Enter to try again."
-             continue
-           fi
-           break;;
-    Default) echo "Using default IdP version: ${IDP_VERSION}"
-             break;;
-  esac
-done
 
 echo "Enter server name of the server or choose default values"
 echo "(Default: ${SERV_NAME})"
@@ -93,7 +73,6 @@ git clone https://github.com/ausaccessfed/idpinstaller.git &>>$wd/install.log
 cd idpinstaller
 cp hosts /etc/ansible
 echo "### Building config file..."
-echo "idp_version: ${IDP_VERSION}" >> group_vars/idp.yml
 echo "ip: ${IP_ADDR}" >> group_vars/idp.yml
 echo "server_name: ${SERV_NAME}" >> group_vars/idp.yml
 echo "environment_type: ${ENVIRONMENT_TYPE}" >> group_vars/idp.yml
