@@ -7,19 +7,19 @@ fi
 ipaddr=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 echo "How do you want to configure your ip address for your idp?"
 echo "(Current ip address: ${ipaddr})"
-select yn in "Enter new" "Exit" "Use current"; do
+select yn in "New" "Exit" "Current"; do
   case $yn in
-    Enter new) echo "Enter ip address:"
-               read usr_reply
-               if [ $usr_reply != 0 ]; then
-                 ipaddr=$usr_reply
-               else
-                 echo "Invalid entry"
-               fi
-               break;;
+    New) echo "Enter ip address:"
+         read usr_reply
+           if [ $usr_reply != 0 ]; then
+             ipaddr=$usr_reply
+           else
+             echo "Invalid entry"
+           fi
+             break;;
     Exit) exit;;
-    Use current) echo "Using current detected ip: ${ipaddr}"
-                 break;;
+    Current) echo "Using current detected ip: ${ipaddr}"
+             break;;
   esac
 done
 
