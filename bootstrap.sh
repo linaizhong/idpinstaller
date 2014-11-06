@@ -61,6 +61,8 @@ done
 
 echo "How do you want to configure your ip address for your idp?"
 echo "(Current ip address: ${IP_ADDR})"
+echo "List of ip addresses available:"
+ip addr | awk '/inet / {print$2}' | cut -d/ -f1
 select opt in "New" "Current"; do
   case $opt in
     New) echo "Enter ip address:"
