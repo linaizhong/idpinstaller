@@ -14,8 +14,11 @@ select opt in "New" "Default"; do
   case $opt in
     New) echo "Enter version number"
          read usr_reply
-           if [ $usr_reply -ne 0 ]; then
+           if [ ${usr_reply:-0} != 0 ]; then
              IDP_VERSION=$usr_reply
+           else
+             echo "Invalid entry. Press Enter to try again."
+             continue
            fi
            break;;
     Default) echo "Using default IdP version: ${IDP_VERSION}"
@@ -31,6 +34,9 @@ select opt in "Yes" "No" "Default"; do
          read usr_reply
            if [ -n "$usr_reply" ]; then
              SERV_NAME=$usr_reply
+           else
+             echo "Invalid entry. Press Enter to try again."
+             continue;
            fi
          break;;
     No) exit;;
