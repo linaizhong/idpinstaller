@@ -92,6 +92,12 @@ yum -y install ansible &>>$wd/install.log
 git clone https://github.com/ausaccessfed/idpinstaller.git &>>$wd/install.log
 cd idpinstaller
 cp hosts /etc/ansible
+echo "### Building config file..."
+echo "idp_version: ${IDP_VERSION}" >> group_vars/idp.yml
+echo "ip: ${IP_ADDR}" >> group_vars/idp.yml
+echo "server_name: ${SERV_NAME}" >> group_vars/idp.yml
+echo "environment_type: ${ENVIRONMENT_TYPE}" >> group_vars/idp.yml
+
 echo "### Installing your IdP... (This may take some time)" \
      | tee -a $wd/install.log
 ansible-playbook software.yml &>>$wd/install.log
