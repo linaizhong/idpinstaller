@@ -28,11 +28,11 @@ select opt in "New" "Default"; do
   esac
 done
 
-echo "Configure server name of the server the IdP is to be installed on?"
+echo "Enter server name of the server or choose default values"
 echo "(Default: ${SERV_NAME})"
-select opt in "Yes" "No" "Default"; do
+select opt in "New" "Default"; do
   case $opt in
-    Yes) echo "Enter server name"
+    New) echo "Enter server name"
          read usr_reply
            if [ -n "$usr_reply" ]; then
              SERV_NAME=$usr_reply
@@ -42,13 +42,12 @@ select opt in "Yes" "No" "Default"; do
              continue;
            fi
          break;;
-    No) exit;;
     Default) echo "Using default server name: ${SERV_NAME}"
              break;;
   esac
 done
 
-echo "Select environment type (If no type is selected, Test will be assumed"
+echo "Select environment type (If no type is selected, Test will be assumed)"
 select opt in "Test" "Production"; do
   case $opt in
     Test) echo "Selected Test environment"
@@ -62,7 +61,7 @@ done
 
 echo "How do you want to configure your ip address for your idp?"
 echo "(Current ip address: ${IP_ADDR})"
-select opt in "New" "Exit" "Current"; do
+select opt in "New" "Current"; do
   case $opt in
     New) echo "Enter ip address:"
          read usr_reply
@@ -74,7 +73,6 @@ select opt in "New" "Exit" "Current"; do
              continue
            fi
          break;;
-    Exit) exit;;
     Current) echo "Using current detected ip: ${IP_ADDR}"
              break;;
   esac
