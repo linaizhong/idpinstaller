@@ -16,6 +16,7 @@ select opt in "New" "Default"; do
          read usr_reply
            if [ ${usr_reply:-0} != 0 ]; then
              IDP_VERSION=$usr_reply
+             echo "Using user supplied value: ${IDP_VERSION}"
            else
              echo "Invalid entry. Press Enter to try again."
              continue
@@ -34,6 +35,7 @@ select opt in "Yes" "No" "Default"; do
          read usr_reply
            if [ -n "$usr_reply" ]; then
              SERV_NAME=$usr_reply
+             echo "Using user supplied value: ${SERV_NAME}"
            else
              echo "Invalid entry. Press Enter to try again."
              continue;
@@ -51,8 +53,9 @@ select opt in "New" "Exit" "Current"; do
   case $opt in
     New) echo "Enter ip address:"
          read usr_reply
-           if [ $usr_reply -ne 0 ]; then
+           if [ $usr_reply != 0 ]; then
              IP_ADDR=$usr_reply
+             echo "Using user supplied value: ${IP_ADDR}"
            else
              echo "Invalid entry. Press Enter to try again."
              continue
