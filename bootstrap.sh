@@ -4,21 +4,56 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
-ipaddr=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+SERV_NAME="localhost.localdomain.com"
+IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+IDP_VERSION=2.4.3
+
+echo "Enter IdP version or choose default values"
+echo "(Default: ${IDP_VERSION})"
+select opt in "New" "Default"
+  case $opt in
+    New) echo "Enter version number"
+         read usr_reply
+           if [ $usr_reply -ne 0 ]; then
+             IDP_VERSION=$usr_reply
+           fi
+           break;;
+    Default) echo "Using default IdP version: ${IDP_VERSION}"
+             break;;
+  esac
+done
+
+echo "Configure server name of the server the IdP is to be installed on?"
+echo "(Default: ${SERV_NAME})"
+select opt in "Yes" "No" "Default"; do
+  case $opt in
+    Yes) echo "Enter server name"
+         read usr_reply
+           if [ -n "$usr_reply" ]; then
+             SERV_NAME=$usr_reply
+           fi
+         break;;
+    No) exit;;
+    Default) echo "Using default server name: ${SERV_NAME}"
+             break;;
+  esac
+done
+
 echo "How do you want to configure your ip address for your idp?"
-echo "(Current ip address: ${ipaddr})"
-select yn in "New" "Exit" "Current"; do
-  case $yn in
+echo "(Current ip address: ${IP_ADDR})"
+select opt in "New" "Exit" "Current"; do
+  case $opt in
     New) echo "Enter ip address:"
          read usr_reply
-           if [ $usr_reply != 0 ]; then
-             ipaddr=$usr_reply
+           if [ $usr_reply -ne 0 ]; then
+             IP_ADDR=$usr_reply
            else
-             echo "Invalid entry"
+             echo "Invalid entry. Press Enter to try again."
+             continue
            fi
-             break;;
+         break;;
     Exit) exit;;
-    Current) echo "Using current detected ip: ${ipaddr}"
+    Current) echo "Using current detected ip: ${IP_ADDR}"
              break;;
   esac
 done
