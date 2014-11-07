@@ -13,30 +13,41 @@ ENVIRONMENT_TYPE="Test"
 # $2 -> variable name where user input is to be stored
 # $3 -> default value
 user_input() {
-  printf "Enter value for $1 [Current: $3]: "
+  printf "Enter value for $1 [Current: $2]: "
   read response
-  if [ $response != 0 ]; then
-    $2 = $response
+  if [ -n "$response" ]; then
+    case $1 in
+      "server name" )
+        SERV_NAME=$response
+        break;;
+      "ip address" )
+        IP_ADDR=$response
+        break;;
+      "environment type" )
+        ENVIRONMENT_TYPE=$response
+        break;;
+    esac
   else
-    $2 = $3
+    # defaults should be selected
+    case $1 in
+      "server_name" )
+        SERV_NAME=$2
+        break;;
+      "ip address" )
+        IP_ADDR=$2
+        break;;
+      "environment type" )
+        ENVIRONMENT_TYPE=$2
+        break;;
+    esac
   fi
 }
 
-user_input_str() {
-  printf "Enter value for $1 [Current: $3]: "
-  read response
-  if [ -n $response ]; then
-    $2 = $response
-  else
-    $2 = $3
-  fi
-}
+user_input_str "server name" $(hostname)
 
-user_input_str "server name" "SERV_NAME" $(hostname)
+user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 
-user_input "ip address" "IP_ADDR" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-
-user_input_str "environment type" "ENVIRONMENT_TYPE" "Test"
+user_input_str "environment type" "Test"
 
 #
 #echo "Enter server name of the server or choose default values"
