@@ -22,7 +22,7 @@ user_input() {
         break;;
       "ip address" )
         result=$(validate_ip_addr $response)
-        if [ $result == true ]; then
+        if [ $result == 0 ]; then
           IP_ADDR=$response
         else
           printf "Invalid value. Try again.\n"
@@ -57,9 +57,9 @@ user_input() {
 # returns 1 on a valid ip address structure. 0 otherwise
 validate_ip_addr() {
   if [[ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-    return true
+    echo 0
   fi
-  return false
+  echo 1
 }
 
 user_input "server name" $(hostname)
