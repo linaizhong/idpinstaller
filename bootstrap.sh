@@ -71,7 +71,7 @@ printf "Server name: $SERV_NAME\n"
 printf "IP Address: $IP_ADDR\n"
 printf "Environment type: $ENVIRONMENT_TYPE\n"
 read -p "Is this correct? [y/N]: " prompt
-case prompt in
+case $prompt in
   [yY][eE][sS]|[yY] )
     break;;
   * )
