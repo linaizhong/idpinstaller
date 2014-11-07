@@ -66,10 +66,10 @@ user_input "server name" $(hostname)
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 user_input "environment type" "Test"
 
-printf "Confirm below values\n"
-printf "Server name: $SERV_NAME"
-printf "IP Address: $IP_ADDR"
-printf "Environment type: $ENVIRONMENT_TYPE"
+printf "Confirm below values:\n"
+printf "Server name: $SERV_NAME\n"
+printf "IP Address: $IP_ADDR\n"
+printf "Environment type: $ENVIRONMENT_TYPE\n"
 read -p "Is this correct? [y/N]: " prompt
 case prompt in
   [yY][eE][sS]|[yY] )
