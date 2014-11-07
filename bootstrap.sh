@@ -21,10 +21,21 @@ user_input() {
         SERV_NAME=$response
         break;;
       "ip address" )
-        IP_ADDR=$response
+        result = validate_ip_addr $response
+        if [ $result == 1 ]; then
+          IP_ADDR=$response
+        else
+          printf "Invalid value. Try again.\n"
+          continue
+        fi
         break;;
       "environment type" )
-        ENVIRONMENT_TYPE=$response
+        if [ "$response" != "Test" && "$response" != "Production" ]; then
+          printf "Invalid value. Must be either \"Production\" or \"Test\"."
+          continue
+        else
+          ENVIRONMENT_TYPE=$response
+        fi
         break;;
     esac
   else
@@ -41,6 +52,14 @@ user_input() {
         break;;
     esac
   fi
+}
+
+# returns 1 on a valid ip address structure. 0 otherwise
+validate_ip_addr() {
+  if [ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]; then
+    return 1
+  fi
+  return 0
 }
 
 user_input "server name" $(hostname)
