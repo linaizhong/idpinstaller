@@ -10,8 +10,7 @@ ENVIRONMENT_TYPE="Test"
 
 # arguments are passed to this function in the following order:
 # $1 -> user friendly description of value to be set
-# $2 -> variable name where user input is to be stored
-# $3 -> default value
+# $2 -> default value
 user_input() {
   printf "Enter value for $1 [Current: $2]: "
   read response
