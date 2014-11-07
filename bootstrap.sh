@@ -30,7 +30,7 @@ user_input() {
         break;;
       "environment type" )
         if [[ "$response" != "Test" && "$response" != "Production" ]]; then
-          printf "Invalid value. Must be either \"Production\" or \"Test\". Aborting...\n"
+          printf "Invalid value. Must be \"Production\" or \"Test\". Aborting...\n"
           exit
         else
           ENVIRONMENT_TYPE=$response
@@ -65,6 +65,19 @@ validate_ip_addr() {
 user_input "server name" $(hostname)
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 user_input "environment type" "Test"
+
+printf "Confirm below values\n"
+printf "Server name: $SERV_NAME"
+printf "IP Address: $IP_ADDR"
+printf "Environment type: $ENVIRONMENT_TYPE"
+read -p "Is this correct? [y/N]: " prompt
+case prompt in
+  [yY][eE][sS]|[yY] )
+    break;;
+  * )
+    current_script=$(readlink -f $0)
+    exec $current_script;;
+esac
 
 wd=$(pwd)
 echo "### Initializing installation..." | tee -a $wd/install.log
