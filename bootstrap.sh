@@ -30,8 +30,8 @@ user_input() {
         fi
         break;;
       "environment type" )
-        if [ "$response" != "Test" && "$response" != "Production" ]; then
-          printf "Invalid value. Must be either \"Production\" or \"Test\"."
+        if [[ "$response" != "Test" && "$response" != "Production" ]]; then
+          printf "Invalid value. Must be either \"Production\" or \"Test\".\n"
           continue
         else
           ENVIRONMENT_TYPE=$response
