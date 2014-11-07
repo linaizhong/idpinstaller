@@ -21,7 +21,7 @@ user_input() {
         SERV_NAME=$response
         break;;
       "ip address" )
-        result = validate_ip_addr $response
+        result=$(validate_ip_addr $response)
         if [ $result == 1 ]; then
           IP_ADDR=$response
         else
