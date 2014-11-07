@@ -54,7 +54,7 @@ user_input() {
   fi
 }
 
-# returns 1 on a valid ip address structure. 0 otherwise
+# returns 0 on a valid ip address structure. 1 otherwise
 validate_ip_addr() {
   if [[ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
     echo 0
