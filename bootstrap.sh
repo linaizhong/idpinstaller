@@ -17,8 +17,7 @@ user_input() {
   if [ -n "$response" ]; then
     case $1 in
       "server name" )
-        SERV_NAME=$response
-        break;;
+        SERV_NAME=$response;;
       "ip address" )
         result=$(validate_ip_addr $response)
         if [ $result == 0 ]; then
@@ -27,7 +26,7 @@ user_input() {
           printf "Invalid value. Aborting...\n"
           exit
         fi
-        break;;
+        ;;
       "environment type" )
         if [[ "$response" != "Test" && "$response" != "Production" ]]; then
           printf "Invalid value. Must be \"Production\" or \"Test\". Aborting...\n"
@@ -35,20 +34,17 @@ user_input() {
         else
           ENVIRONMENT_TYPE=$response
         fi
-        break;;
+        ;;
     esac
   else
     # defaults should be selected
     case $1 in
       "server_name" )
-        SERV_NAME=$2
-        break;;
+        SERV_NAME=$2;;
       "ip address" )
-        IP_ADDR=$2
-        break;;
+        IP_ADDR=$2;;
       "environment type" )
-        ENVIRONMENT_TYPE=$2
-        break;;
+        ENVIRONMENT_TYPE=$2;;
     esac
   fi
 }
@@ -73,7 +69,7 @@ printf "Environment type: $ENVIRONMENT_TYPE\n"
 read -p "Is this correct? [y/N]: " prompt
 case $prompt in
   [yY][eE][sS]|[yY] )
-    break;;
+    ;;
   * )
     current_script=$(readlink -f $0)
     exec $current_script;;
