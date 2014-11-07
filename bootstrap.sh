@@ -24,14 +24,14 @@ user_input() {
         if [ $result == 0 ]; then
           IP_ADDR=$response
         else
-          printf "Invalid value. Try again.\n"
-          continue
+          printf "Invalid value. Aborting...\n"
+          exit
         fi
         break;;
       "environment type" )
         if [[ "$response" != "Test" && "$response" != "Production" ]]; then
-          printf "Invalid value. Must be either \"Production\" or \"Test\".\n"
-          continue
+          printf "Invalid value. Must be either \"Production\" or \"Test\". Aborting...\n"
+          exit
         else
           ENVIRONMENT_TYPE=$response
         fi
@@ -63,9 +63,7 @@ validate_ip_addr() {
 }
 
 user_input "server name" $(hostname)
-
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
-
 user_input "environment type" "Test"
 
 wd=$(pwd)
