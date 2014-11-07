@@ -58,6 +58,7 @@ user_input() {
 validate_ip_addr() {
   if [[ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
     echo 0
+    return
   fi
   echo 1
 }
