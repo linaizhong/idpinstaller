@@ -72,7 +72,7 @@ case $prompt in
     ;;
   * )
     current_script=$(readlink -f $0)
-    exec $current_script;;
+    exec bash $current_script;;
 esac
 
 wd=$(pwd)
