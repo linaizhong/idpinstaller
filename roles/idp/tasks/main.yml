@@ -1,6 +1,4 @@
 ---
-- include_vars: ../../../IDP-Installer.conf
-
 - name: Create destination directory /opt/aaf/shibsrc
   file: path=/opt/aaf/shibsrc state=directory
 
