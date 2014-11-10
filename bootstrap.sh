@@ -4,6 +4,77 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+SERV_NAME=$(hostname)
+IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+ENVIRONMENT_TYPE="Test"
+
+# arguments are passed to this function in the following order:
+# $1 -> user friendly description of value to be set
+# $2 -> default value
+user_input() {
+  printf "Enter value for $1 [Current: $2]: "
+  read response
+  if [ -n "$response" ]; then
+    case $1 in
+      "server name" )
+        SERV_NAME=$response;;
+      "ip address" )
+        result=$(validate_ip_addr $response)
+        if [ $result == 0 ]; then
+          IP_ADDR=$response
+        else
+          printf "Invalid value. Aborting...\n"
+          exit
+        fi
+        ;;
+      "environment type" )
+        if [[ "$response" != "Test" && "$response" != "Production" ]]; then
+          printf "Invalid value. Must be \"Production\" or \"Test\". Aborting...\n"
+          exit
+        else
+          ENVIRONMENT_TYPE=$response
+        fi
+        ;;
+    esac
+  else
+    # defaults should be selected
+    case $1 in
+      "server_name" )
+        SERV_NAME=$2;;
+      "ip address" )
+        IP_ADDR=$2;;
+      "environment type" )
+        ENVIRONMENT_TYPE=$2;;
+    esac
+  fi
+}
+
+# returns 0 on a valid ip address structure. 1 otherwise
+validate_ip_addr() {
+  if [[ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+    echo 0
+    return
+  fi
+  echo 1
+}
+
+user_input "server name" $(hostname)
+user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
+user_input "environment type" "Test"
+
+printf "Confirm below values:\n"
+printf "Server name: $SERV_NAME\n"
+printf "IP Address: $IP_ADDR\n"
+printf "Environment type: $ENVIRONMENT_TYPE\n"
+read -p "Is this correct? [y/N]: " prompt
+case $prompt in
+  [yY][eE][sS]|[yY] )
+    ;;
+  * )
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+esac
+
 wd=$(pwd)
 echo "### Initializing installation..." | tee -a $wd/install.log
 mkdir -p /opt/aaf
@@ -16,6 +87,11 @@ yum -y install ansible &>>$wd/install.log
 git clone https://github.com/ausaccessfed/idpinstaller.git &>>$wd/install.log
 cd idpinstaller
 cp hosts /etc/ansible
+echo "### Building config file..."
+echo "ip: ${IP_ADDR}" >> group_vars/idp.yml
+echo "server_name: ${SERV_NAME}" >> group_vars/idp.yml
+echo "environment_type: ${ENVIRONMENT_TYPE}" >> group_vars/idp.yml
+
 echo "### Installing your IdP... (This may take some time)" \
      | tee -a $wd/install.log
 ansible-playbook software.yml &>>$wd/install.log
