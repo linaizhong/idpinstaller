@@ -30,7 +30,7 @@
   template: src=relying-party.xml.j2 dest=/opt/shibboleth-idp/conf/relying-party.xml
 
 - name: Create credentials directory
-  file: path=/opt/shibboleth-idp/credentials state=directory owner=root group=tomcat mode=0770
+  file: path=/opt/shibboleth-idp/credentials state=directory owner=root group=tomcat mode=0750
 
 - name: Download certificates (Test environment)
   get_url: >
@@ -41,7 +41,7 @@
 - name: Download certificates (Production environment)
   get_url: >
     url=https://ds.aaf.edu.au/distribution/metadata/metadata-cert.pem
-    dest=/opt/shibboleth-idp/credentials/aaf-metadata-cert
+    dest=/opt/shibboleth-idp/credentials/aaf-metadata-cert.pem
   when: environment_type == "Production"
 
 - name: Change permissions for /opt/shibboleth-idp/metadata directory
