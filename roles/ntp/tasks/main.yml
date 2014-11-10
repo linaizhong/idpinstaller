@@ -3,4 +3,4 @@
   yum: pkg=ntp state=latest
 
 - name: Enable ntp startup on boot
-  service: name=ntp enabled=yes
+  service: name=ntpd enabled=yes
