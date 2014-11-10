@@ -44,6 +44,8 @@
     dest=/opt/shibboleth-idp/credentials/aaf-metadata-cert
   when: environment_type == "Production"
 
+- name: Change permissions for /opt/shibboleth-idp/metadata directory
+  file: path=/opt/shibboleth-idp/metadata mode=0775
 
 - name: Change permissions for /opt/shibboleth-idp directory
   file: path=/opt/shibboleth-idp/ owner=root group=tomcat recurse=yes
