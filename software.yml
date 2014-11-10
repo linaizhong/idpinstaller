@@ -3,6 +3,7 @@
   roles:
      - ntp
      - ant
+     - firewalld
      - unzip
      - apache
      - db
