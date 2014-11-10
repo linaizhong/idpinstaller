@@ -4,3 +4,6 @@
 
 - name: Open port 443
   firewalld: port=443/tcp permanent=true state=enabled
+
+- name: Restart firewalld
+  service: name=firewalld state=restarted
