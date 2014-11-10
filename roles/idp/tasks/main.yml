@@ -26,6 +26,9 @@
   file: path=/opt/shibboleth-idp/logs state=directory owner=root group=tomcat mode=0774 recurse=yes
 
 
+- name: Write /opt/shibboleth-idp/conf/relying-party.xml
+  template: src=relying-party.xml.j2 dest=/opt/shibboleth-idp/conf/relying-party.xml
+
 - name: Create credentials directory
   file: path=/opt/shibboleth-idp/credentials state=directory owner=root group=tomcat mode=0770
 
