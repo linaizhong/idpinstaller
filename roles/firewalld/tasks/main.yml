@@ -1,0 +1,6 @@
+---
+- name: Open port 80
+  firewalld: port=80/tcp permanent=true state=enabled
+
+- name: Open port 443
+  firewalld: port=443/tcp permanent=true state=enabled
