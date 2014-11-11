@@ -46,29 +46,21 @@
 - name: Change permissions for /opt/shibboleth-idp directory
   file: path=/opt/shibboleth-idp/ owner=root group=tomcat recurse=yes
 
-- name: Change permissions for /opt/shibboleth-idp/metadata directory
-  file: path=/opt/shibboleth-idp/metadata mode=0770
+- name: Change permissions for IdP subfolders to mode 750
+  file: path=/opt/shibboleth-idp/{{ item }} mode=0750
+  with_items:
+    - war
+    - war/idp.war
+    - bin
+    - lib
+    - credentials
 
-- name: Change permissions for /opt/shibboleth-idp/war directory
-  file: path=/opt/shibboleth-idp/war mode=0750
-
-- name: Change permissions for /opt/shibboleth-idp/war/idp.war file
-  file: path=/opt/shibboleth-idp/war/idp.war mode=0750
-
-- name: Change permissions for /opt/shibboleth-idp/conf directory
-  file: path=/opt/shibboleth-idp/conf mode=0070
-
-- name: Change permissions for /opt/shibboleth-idp/logs directory
-  file: path=/opt/shibboleth-idp/logs mode=0070
-
-- name: Change permissions for /opt/shibboleth-idp/bin directory
-  file: path=/opt/shibboleth-idp/bin mode=0050
-
-- name: Change permissions for /opt/shibboleth-idp/lib directory
-  file: path=/opt/shibboleth-idp/lib mode=0050
-
-- name: Change permissions for /opt/shibboleth-idp/credentials directory
-  file: path=/opt/shibboleth-idp/credentials mode=0750
+- name: Change permissions for IdP subfolders to mode 770
+  file: path=/opt/shibboleth-idp/{{ item }} mode=0770
+  with_items:
+    - metadata
+    - conf
+    - logs
 
 - name: Start tomcat
   service: name=tomcat state=started
