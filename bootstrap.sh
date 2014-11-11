@@ -8,6 +8,12 @@ SERV_NAME=$(hostname)
 IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 ENVIRONMENT_TYPE="Test"
 
+LDAP_SERV_NAME=$(hostname)
+LDAP_PORT=389
+LDAP_DN=""
+LDAP_PASSWD=""
+LDAP_CONN_TYPE="LDAP"
+
 # arguments are passed to this function in the following order:
 # $1 -> user friendly description of value to be set
 # $2 -> default value
