@@ -4,3 +4,6 @@
 
 - name: Enable ntp startup on boot
   service: name=ntpd enabled=yes
+
+- name: start ntpd
+  service: name=ntpd state=started
