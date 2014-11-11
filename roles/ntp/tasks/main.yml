@@ -1,3 +1,9 @@
 ---
 - name: Installs ntp
   yum: pkg=ntp state=latest
+
+- name: Enable ntp startup on boot
+  service: name=ntpd enabled=yes
+
+- name: start ntpd
+  service: name=ntpd state=started
