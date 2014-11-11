@@ -41,6 +41,16 @@ user_input() {
           ENVIRONMENT_TYPE=$response
         fi
         ;;
+      "LDAP server name" )
+        LDAP_SERV_NAME=$response;;
+      "LDAP port" )
+        LDAP_PORT=$response;;
+      "LDAP distinguished name" )
+        LDAP_DN=$response;;
+      "LDAP password" )
+        LDAP_PASSWD=$response;;
+      "LDAP connection type" )
+        LDAP_CONN_TYPE=$response;;
     esac
   else
     # defaults should be selected
@@ -51,6 +61,16 @@ user_input() {
         IP_ADDR=$2;;
       "environment type" )
         ENVIRONMENT_TYPE=$2;;
+      "LDAP server name" )
+        LDAP_SERV_NAME=$2;;
+      "LDAP port" )
+        LDAP_PORT=$2;;
+      "LDAP distinguished name" )
+        LDAP_DN=$2;;
+      "LDAP password" )
+        LDAP_PASSWD=$2;;
+      "LDAP connection type" )
+        LDAP_CONN_TYPE=$2;;
     esac
   fi
 }
