@@ -13,6 +13,7 @@ LDAP_PORT=389
 LDAP_DN=""
 LDAP_PASSWD=""
 LDAP_CONN_TYPE="LDAP"
+LDAP_PACKAGE="other"
 
 # arguments are passed to this function in the following order:
 # $1 -> user friendly description of value to be set
@@ -43,6 +44,8 @@ user_input() {
         ;;
       "LDAP server name" )
         LDAP_SERV_NAME=$response;;
+      "LDAP software package (AD/other)" )
+        LDAP_PACKAGE=$response;;
       "LDAP port" )
         LDAP_PORT=$response;;
       "LDAP distinguished name" )
@@ -57,6 +60,8 @@ user_input() {
     case $1 in
       "server_name" )
         SERV_NAME=$2;;
+      "LDAP software package (AD/other)" )
+        LDAP_PACKAGE=$2;;
       "ip address" )
         IP_ADDR=$2;;
       "environment type" )
