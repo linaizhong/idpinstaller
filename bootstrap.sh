@@ -117,7 +117,7 @@ case $prompt in
     exec bash $current_script;;
 esac
 
-ldapsearch -H $LDAP_HOSTNAME -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
+ldapsearch -b cn=users,cn=accounts,dc=exp,dc=aaf,dc=edu,dc=au -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
 if [ $? != 0 ]; then
   printf "Unable to bind to LDAP server. Check settings and try again.\n"
   current_script=$(readlink -f $0)
