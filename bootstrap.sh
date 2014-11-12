@@ -8,7 +8,7 @@ SERV_NAME=$(hostname)
 IP_ADDR=$(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 ENVIRONMENT_TYPE="Test"
 
-LDAP_SERV_NAME=$(hostname)
+LDAP_HOSTNAME=$(hostname)
 LDAP_PORT=389
 LDAP_DN=""
 LDAP_PASSWD=""
@@ -42,8 +42,8 @@ user_input() {
           ENVIRONMENT_TYPE=$response
         fi
         ;;
-      "LDAP server name" )
-        LDAP_SERV_NAME=$response;;
+      "LDAP hostname" )
+        LDAP_HOSTNAME=$response;;
       "LDAP software package (AD/other)" )
         LDAP_PACKAGE=$response;;
       "LDAP port" )
@@ -64,8 +64,8 @@ user_input() {
         IP_ADDR=$2;;
       "environment type" )
         ENVIRONMENT_TYPE=$2;;
-      "LDAP server name" )
-        LDAP_SERV_NAME=$2;;
+      "LDAP hostname" )
+        LDAP_HOSTNAME=$2;;
       "LDAP software package (AD/other)" )
         LDAP_PACKAGE=$2;;
       "LDAP port" )
@@ -92,19 +92,18 @@ validate_ip_addr() {
 user_input "server name" $(hostname)
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 user_input "environment type" "Test"
-user_input "LDAP server name" $(hostname)
+user_input "LDAP hostname" $(hostname)
 user_input "LDAP software package (AD/other)" "other"
 user_input "LDAP port" 389
 user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
 user_input "LDAP connection type" "LDAP"
 
-
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
 printf "IP Address: $IP_ADDR\n"
 printf "Environment type: $ENVIRONMENT_TYPE\n"
-printf "LDAP server name: $LDAP_SERV_NAME\n"
+printf "LDAP hostname: $LDAP_HOSTNAME\n"
 printf "LDAP software package: $LDAP_PACKAGE\n"
 printf "LDAP port: $LDAP_PORT\n"
 printf "LDAP distinguished name: $LDAP_DN\n"
@@ -117,6 +116,13 @@ case $prompt in
     current_script=$(readlink -f $0)
     exec bash $current_script;;
 esac
+
+ldapsearch -H $LDAP_HOSTNAME -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
+if [ $? != 0 ]; then
+  printf "Unable to bind to LDAP server. Check settings and try again.\n"
+  current_script=$(readlink -f $0)
+  exec bash $current_script
+fi
 
 wd=$(pwd)
 echo "### Initializing installation..." | tee -a $wd/install.log
