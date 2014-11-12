@@ -60,14 +60,14 @@ user_input() {
     case $1 in
       "server_name" )
         SERV_NAME=$2;;
-      "LDAP software package (AD/other)" )
-        LDAP_PACKAGE=$2;;
       "ip address" )
         IP_ADDR=$2;;
       "environment type" )
         ENVIRONMENT_TYPE=$2;;
       "LDAP server name" )
         LDAP_SERV_NAME=$2;;
+      "LDAP software package (AD/other)" )
+        LDAP_PACKAGE=$2;;
       "LDAP port" )
         LDAP_PORT=$2;;
       "LDAP distinguished name" )
@@ -92,6 +92,13 @@ validate_ip_addr() {
 user_input "server name" $(hostname)
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 user_input "environment type" "Test"
+user_input "LDAP server name" $(hostname)
+user_input "LDAP software package (AD/other)" "other"
+user_input "LDAP port" 389
+user_input "LDAP distinguished name" ""
+user_input "LDAP password" ""
+user_input "LDAP connection type" "LDAP"
+
 
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
