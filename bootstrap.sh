@@ -10,6 +10,7 @@ ENVIRONMENT_TYPE="Test"
 
 LDAP_HOSTNAME=$(hostname)
 LDAP_PORT=389
+LDAP_SEARCHBASE=""
 LDAP_DN=""
 LDAP_PASSWD=""
 LDAP_CONN_TYPE="LDAP"
@@ -48,6 +49,8 @@ user_input() {
         LDAP_PACKAGE=$response;;
       "LDAP port" )
         LDAP_PORT=$response;;
+      "LDAP search base" )
+        LDAP_SEARCHBASE=$response;;
       "LDAP distinguished name" )
         LDAP_DN=$response;;
       "LDAP password" )
@@ -70,6 +73,8 @@ user_input() {
         LDAP_PACKAGE=$2;;
       "LDAP port" )
         LDAP_PORT=$2;;
+      "LDAP search base" )
+        LDAP_SEARCHBASE=$2;;
       "LDAP distinguished name" )
         LDAP_DN=$2;;
       "LDAP password" )
@@ -95,6 +100,7 @@ user_input "environment type" "Test"
 user_input "LDAP hostname" $(hostname)
 user_input "LDAP software package (AD/other)" "other"
 user_input "LDAP port" 389
+user_input "LDAP search base" ""
 user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
 user_input "LDAP connection type" "LDAP"
@@ -106,6 +112,7 @@ printf "Environment type: $ENVIRONMENT_TYPE\n"
 printf "LDAP hostname: $LDAP_HOSTNAME\n"
 printf "LDAP software package: $LDAP_PACKAGE\n"
 printf "LDAP port: $LDAP_PORT\n"
+printf "LDAP search base: $LDAP_SEARCHBASE\n"
 printf "LDAP distinguished name: $LDAP_DN\n"
 printf "LDAP connection type: $LDAP_CONN_TYPE\n"
 read -p "Is this correct? [y/N]: " prompt
@@ -119,7 +126,7 @@ esac
 
 wd=$(pwd)
 which ldapsearch &>/dev/null || { echo "ldapsearch is not installed. Installing now" &>>$wd/install.log; yum -y install openldap-clients &>>$wd/install.log; }
-ldapsearch -b cn=users,cn=accounts,dc=exp,dc=aaf,dc=edu,dc=au -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
+ldapsearch -b $LDAP_SEARCHBASE -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
 if [ $? != 0 ]; then
   printf "Unable to bind to LDAP server. Check settings and try again.\n"
   current_script=$(readlink -f $0)
