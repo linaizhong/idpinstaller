@@ -104,6 +104,11 @@ printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
 printf "IP Address: $IP_ADDR\n"
 printf "Environment type: $ENVIRONMENT_TYPE\n"
+printf "LDAP server name: $LDAP_SERV_NAME\n"
+printf "LDAP software package: $LDAP_PACKAGE\n"
+printf "LDAP port: $LDAP_PORT\n"
+printf "LDAP distinguished name: $LDAP_DN\n"
+printf "LDAP connection type: $LDAP_CONN_TYPE\n"
 read -p "Is this correct? [y/N]: " prompt
 case $prompt in
   [yY][eE][sS]|[yY] )
