@@ -117,6 +117,7 @@ case $prompt in
     exec bash $current_script;;
 esac
 
+which ldapsearch &>/dev/null || { echo 'ldapsearch is not installed' >&2; exit 1; }
 ldapsearch -b cn=users,cn=accounts,dc=exp,dc=aaf,dc=edu,dc=au -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
 if [ $? != 0 ]; then
   printf "Unable to bind to LDAP server. Check settings and try again.\n"
