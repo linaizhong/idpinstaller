@@ -151,7 +151,9 @@ echo "environment_type: ${ENVIRONMENT_TYPE}" >> group_vars/idp.yml
 echo "ldap_hostname: ${LDAP_HOSTNAME}" >> group_vars/idp.yml
 echo "ldap_software_package: ${LDAP_PACKAGE}" >> group_vars/idp.yml
 echo "ldap_port: ${LDAP_PORT}" >> group_vars/idp.yml
+echo "ldap_searchbase: ${LDAP_SEARCHBASE}" >> group_vars/idp.yml
 echo "ldap_dn: ${LDAP_DN}" >> group_vars/idp.yml
+echo "ldap_passwd: ${LDAP_PASSWD}" >> group_vars/idp.yml
 echo "ldap_conn_type: ${LDAP_CONN_TYPE}" >> group_vars/idp.yml
 
 echo "### Installing your IdP... (This may take some time)" \
