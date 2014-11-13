@@ -16,6 +16,8 @@ LDAP_PASSWD=""
 LDAP_CONN_TYPE="LDAP"
 LDAP_PACKAGE="other"
 
+ENTITYID=""
+
 # arguments are passed to this function in the following order:
 # $1 -> user friendly description of value to be set
 # $2 -> default value
@@ -57,6 +59,8 @@ user_input() {
         LDAP_PASSWD=$response;;
       "LDAP connection type" )
         LDAP_CONN_TYPE=$response;;
+      "entity id" )
+        ENTITYID=$response;;
     esac
   else
     # defaults should be selected
@@ -81,6 +85,8 @@ user_input() {
         LDAP_PASSWD=$2;;
       "LDAP connection type" )
         LDAP_CONN_TYPE=$2;;
+      "entity id" )
+        ENTITYID=$2;;
     esac
   fi
 }
@@ -104,6 +110,7 @@ user_input "LDAP search base" ""
 user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
 user_input "LDAP connection type" "LDAP"
+user_input "entity id" "https://$(hostname)/idp/shibboleth"
 
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
@@ -115,6 +122,7 @@ printf "LDAP port: $LDAP_PORT\n"
 printf "LDAP search base: $LDAP_SEARCHBASE\n"
 printf "LDAP distinguished name: $LDAP_DN\n"
 printf "LDAP connection type: $LDAP_CONN_TYPE\n"
+printf "Entity ID: $ENTITYID\n"
 read -p "Is this correct? [y/N]: " prompt
 case $prompt in
   [yY][eE][sS]|[yY] )
@@ -155,6 +163,7 @@ echo "ldap_searchbase: ${LDAP_SEARCHBASE}" >> group_vars/idp.yml
 echo "ldap_dn: ${LDAP_DN}" >> group_vars/idp.yml
 echo "ldap_passwd: ${LDAP_PASSWD}" >> group_vars/idp.yml
 echo "ldap_conn_type: ${LDAP_CONN_TYPE}" >> group_vars/idp.yml
+echo "entity_id: ${ENTITYID}" >> group_vars/idp.yml
 
 echo "### Installing your IdP... (This may take some time)" \
      | tee -a $wd/install.log
