@@ -126,7 +126,7 @@ esac
 
 wd=$(pwd)
 which ldapsearch &>/dev/null || { echo "ldapsearch is not installed. Installing now" &>>$wd/install.log; yum -y install openldap-clients &>>$wd/install.log; }
-ldapsearch -b $LDAP_SEARCHBASE -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
+ldapsearch -b $LDAP_CONN_TYPE://$LDAP_SEARCHBASE -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
 if [ $? != 0 ]; then
   printf "Unable to bind to LDAP server. Check settings and try again.\n"
   current_script=$(readlink -f $0)
