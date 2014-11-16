@@ -1,4 +1,7 @@
 ---
+- name: Start firewalld
+  service: name=firewalld state=started
+
 - name: Open port 80
   firewalld: port=80/tcp permanent=true state=enabled
 
