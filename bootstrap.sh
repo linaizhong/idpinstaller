@@ -13,7 +13,7 @@ LDAP_PORT=389
 LDAP_SEARCHBASE=""
 LDAP_DN=""
 LDAP_PASSWD=""
-LDAP_CONN_TYPE="LDAP"
+LDAP_CONN_TYPE="ldap"
 LDAP_PACKAGE="other"
 
 # arguments are passed to this function in the following order:
@@ -103,7 +103,7 @@ user_input "LDAP port" 389
 user_input "LDAP search base" ""
 user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
-user_input "LDAP connection type" "LDAP"
+user_input "LDAP connection type" "ldap"
 
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
