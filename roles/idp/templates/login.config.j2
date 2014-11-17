@@ -3,10 +3,10 @@ ShibUserPassAuth {
 // Example LDAP authentication
 // See: https://wiki.shibboleth.net/confluence/display/SHIB2/IdPAuthUserPass
    edu.vt.middleware.ldap.jaas.LdapLoginModule required
-      ldapUrl={{ ldap_hostname }}
-      base={{ ldap_searchbase }}
-      serviceUser={{ ldap_dn }}
-      serviceCredential={{ ldap_passwd }}
+      ldapUrl="{{ ldap_hostname }}"
+      base="{{ ldap_searchbase }}"
+      serviceUser="{{ ldap_dn }}"
+      serviceCredential="{{ ldap_passwd }}"
       subtreeSearch="true"
       ssl="false"
       tls="false"
