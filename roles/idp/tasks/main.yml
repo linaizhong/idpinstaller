@@ -12,6 +12,9 @@
   set_fact:
     idp_storepass: "{{ lookup('password', '/opt/aaf/credentials/' + server_name + '/idp-storepass chars=letters,digits length=64') }}"
 
+- name: Write /opt/aaf/shibsrc/shibboleth-identityprovider-{{idp_version}}/src/main/webapp/WEB-INF/web.xml
+  template: src=web.xml.j2 dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{idp_version}}/src/main/webapp/WEB-INF/web.xml
+
 - name: Create install script
   template: >
     src=install-idp.sh.j2 dest=/opt/aaf/shibsrc/install-{{idp_version}}.sh
@@ -27,6 +30,12 @@
 
 - name: Write /opt/shibboleth-idp/conf/relying-party.xml
   template: src=relying-party.xml.j2 dest=/opt/shibboleth-idp/conf/relying-party.xml
+
+- name: Write /opt/shibboleth-idp/conf/login.config
+  template: src=login.config.j2 dest=/opt/shibboleth-idp/conf/login.config
+
+- name: Write /opt/shibboleth-idp/conf/handler.xml
+  template: src=handler.xml.j2 dest=/opt/shibboleth-idp/conf/handler.xml
 
 - name: Create credentials directory
   file: path=/opt/shibboleth-idp/credentials state=directory owner=root group=tomcat mode=0750
