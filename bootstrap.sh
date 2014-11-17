@@ -13,7 +13,7 @@ LDAP_PORT=389
 LDAP_SEARCHBASE=""
 LDAP_DN=""
 LDAP_PASSWD=""
-LDAP_CONN_TYPE="LDAP"
+LDAP_CONN_TYPE="ldap"
 LDAP_PACKAGE="other"
 
 ENTITYID=""
@@ -109,8 +109,8 @@ user_input "LDAP port" 389
 user_input "LDAP search base" ""
 user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
-user_input "LDAP connection type" "LDAP"
 user_input "entity id" "https://$(hostname)/idp/shibboleth"
+user_input "LDAP connection type" "ldap"
 
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
@@ -134,12 +134,47 @@ esac
 
 wd=$(pwd)
 which ldapsearch &>/dev/null || { echo "ldapsearch is not installed. Installing now" &>>$wd/install.log; yum -y install openldap-clients &>>$wd/install.log; }
-ldapsearch -b $LDAP_SEARCHBASE -H $LDAP_HOSTNAME:$LDAP_PORT -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
-if [ $? != 0 ]; then
-  printf "Unable to bind to LDAP server. Check settings and try again.\n"
-  current_script=$(readlink -f $0)
-  exec bash $current_script
-fi
+ldapsearch -b $LDAP_SEARCHBASE -H $LDAP_CONN_TYPE://$LDAP_HOSTNAME -x -D $LDAP_DN -w $LDAP_PASSWD &>/dev/null
+
+case $? in
+  -1 )
+    printf "Error $?: Unable to connect\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  0 )
+    ;;
+  1 )
+    printf "Error $?: Improperly sequenced operation\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  16 )
+    printf "Error $?: No such attribute\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  17 )
+    printf "Error $?: Undefined attribute type"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  32 )
+    printf "Error $?: No such object (user DN or base DN wrong)\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  49 )
+    printf "Error $?: Invalid credentials (username or password wrong)\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  50 )
+    printf "Error $?: Insufficient access rights\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  80 )
+    printf "Error $?: Internal error\n"
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+  * )
+    current_script=$(readlink -f $0)
+    exec bash $current_script;;
+esac
 
 echo "### Initializing installation..." | tee -a $wd/install.log
 mkdir -p /opt/aaf
