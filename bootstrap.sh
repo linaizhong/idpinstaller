@@ -27,7 +27,14 @@ user_input() {
   if [ -n "$response" ]; then
     case $1 in
       "server name" )
-        SERV_NAME=$response;;
+        result=$(validate_hostname $response)
+        if [ $result == 0 ]; then
+          SERV_NAME=$response
+        else
+          printf "Invalid hostname. Aborting...\n"
+          exit
+        fi
+        ;;
       "ip address" )
         result=$(validate_ip_addr $response)
         if [ $result == 0 ]; then
@@ -46,14 +53,7 @@ user_input() {
         fi
         ;;
       "LDAP hostname" )
-        result=$(validate_hostname $response)
-        if [ $result == 0 ]; then
-          LDAP_HOSTNAME=$response
-        else
-          printf "Invalid hostname. Aborting...\n"
-          exit
-        fi
-        ;;
+        LDAP_HOSTNAME=$response;;
       "LDAP software package (AD/other)" )
         LDAP_PACKAGE=$response;;
       "LDAP port" )
