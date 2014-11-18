@@ -7,4 +7,12 @@
 - name: Extract archive
   command: >
     /bin/tar xvf /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}.zip
-    creates=/opt/uApprove-{{ uapprove_version }}
+    creates=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}
+
+- name: Copy over uApprove libraries
+  copy: >
+    src={{ item }}
+    dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/lib
+  with_fileglob:
+    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/*.jar
+    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/jdbc/*.jar
