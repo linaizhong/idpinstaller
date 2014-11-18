@@ -101,6 +101,7 @@ ExtendedStatus On
 
 Listen 80
 Listen 443
+Listen 8443
 
 <VirtualHost {{ip}}:443>
   ServerName {{server_name}}
@@ -115,6 +116,30 @@ Listen 443
   </Proxy>
 
   ProxyPass /idp ajp://localhost:8009/idp retry=5
+</VirtualHost>
+
+<VirtualHost {{ip}}:8443>
+  ServerName {{server_name}}:8443
+
+  SSLEngine on
+  SSLProtocol -All -SSLv2 -SSLv3 +TLSv1
+  SSLHonorCipherOrder On
+  SSLCipherSuite ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:DHE-DSS-AES128-GCM-SHA256:kEDH+AESGCM:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA:ECDHE-ECDSA-AES128-SHA:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA:ECDHE-ECDSA-AES256-SHA:DHE-RSA-AES128-SHA256:DHE-RSA-AES128-SHA:DHE-DSS-AES128-SHA256:DHE-RSA-AES256-SHA256:DHE-DSS-AES256-SHA:DHE-RSA-AES256-SHA:AES128-GCM-SHA256:AES256-GCM-SHA384:AES128-SHA256:AES256-SHA256:AES128-SHA:AES256-SHA:AES:CAMELLIA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!aECDH:!EDH-DSS-DES-CBC3-SHA:!EDH-RSA-DES-CBC3-SHA:!KRB5-DES-CBC3-SHA
+  SSLOptions -StdEnvVars +ExportCertData
+  SSLCertificateFile /opt/shibboleth-idp/credentials/idp.crt
+  SSLCertificateKeyFile /opt/shibboleth-idp/credentials/idp.key
+  SSLVerifyClient optional_no_ca
+  SSLVerifyDepth 10
+
+  LogFormat "%h %l %u %t \"%r\" %>s %b" common
+  LogFormat "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b" ssl
+  CustomLog logs/vho_access_log common
+  CustomLog logs/vho_8443_request_log ssl
+  ErrorLog logs/vho_8443_error_log
+  LogLevel warn
+
+  ProxyPass /idp ajp://localhost:8009/idp retry=2
+  ProxyPassReverse /idp ajp://localhost:8009/idp
 </VirtualHost>
 
 <VirtualHost 127.0.0.1:80>
