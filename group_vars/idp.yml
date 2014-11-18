@@ -4,3 +4,5 @@ idp_version: 2.4.3
 # Tomcat settings
 tomcat_filename: apache-tomcat
 tomcat_version: 7.0.42
+
+uapprove_version: 2.5.0
