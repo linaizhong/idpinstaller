@@ -5,9 +5,9 @@
     dest=/opt/aaf/shibsrc/
 
 - name: Extract archive
-  command: >
-    /bin/tar xvf /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}.zip
-    creates=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}
+  unarchive: >
+    src=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}.zip
+    dest=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}
 
 - name: Copy over uApprove libraries
   copy: >
