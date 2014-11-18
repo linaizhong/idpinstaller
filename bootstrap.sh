@@ -119,7 +119,7 @@ validate_hostname() {
 user_input "server name" $(hostname)
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 user_input "environment type" "Test"
-user_input "LDAP hostname" $(hostname)
+user_input "LDAP hostname" "$(hostname).com"
 user_input "LDAP software package (AD/other)" "other"
 user_input "LDAP port" 389
 user_input "LDAP search base" ""
