@@ -46,7 +46,14 @@ user_input() {
         fi
         ;;
       "LDAP hostname" )
-        LDAP_HOSTNAME=$response;;
+        result=$(validate_hostname)
+        if [ $result == 0 ]; then
+          LDAP_HOSTNAME=$response
+        else
+          printf "Invalid hostname. Aborting...\n"
+          exit
+        fi
+        ;;
       "LDAP software package (AD/other)" )
         LDAP_PACKAGE=$response;;
       "LDAP port" )
@@ -94,6 +101,15 @@ user_input() {
 # returns 0 on a valid ip address structure. 1 otherwise
 validate_ip_addr() {
   if [[ $1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+    echo 0
+    return
+  fi
+  echo 1
+}
+
+# returns 0 on valid hostname. 1 otherwise
+validate_hostname() {
+  if [ $1 != "localhost.localdomain" ]; then
     echo 0
     return
   fi
