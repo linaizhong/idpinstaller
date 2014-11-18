@@ -1,0 +1,10 @@
+---
+- name: Download uApprove
+  get_url: >
+    url=http://www.switch.ch/aai/downloads/uApprove-{{ uapprove_version }}.zip
+    dest=/opt/aaf/shibsrc/
+
+- name: Extract archive
+  command: >
+    /bin/tar xvf /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}.zip
+    creates=/opt/uApprove-{{ uapprove_version }}
