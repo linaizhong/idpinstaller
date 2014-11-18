@@ -46,7 +46,7 @@ user_input() {
         fi
         ;;
       "LDAP hostname" )
-        result=$(validate_hostname)
+        result=$(validate_hostname $response)
         if [ $result == 0 ]; then
           LDAP_HOSTNAME=$response
         else
