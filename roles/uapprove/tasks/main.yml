@@ -21,3 +21,21 @@
   copy: >
     src=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/lib/jdbc/optional/mysql-connector-java-5.1.25.jar
     dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/lib
+
+- name: Make uApprove directory in webapp directory
+  file: >
+    path=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/src/main/webapp/uApprove
+    state=directory
+
+- name: Copy over web application files to IdP webapp directory
+  copy: >
+    src={{ item }}
+    dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/src/main/webapp/uApprove
+  with_fileglob:
+    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/webapp/*
+
+- name: Copy over configuration templates
+  copy: src={{ item }} dest=/opt/shibboleth-idp/conf
+  with_items:
+    - uApprove.xml
+    - uApprove.properties
