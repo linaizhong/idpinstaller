@@ -101,6 +101,7 @@ ExtendedStatus On
 
 Listen 80
 Listen 443
+Listen 8443
 
 <VirtualHost {{ip}}:443>
   ServerName {{server_name}}
@@ -115,6 +116,21 @@ Listen 443
   </Proxy>
 
   ProxyPass /idp ajp://localhost:8009/idp retry=5
+</VirtualHost>
+
+<VirtualHost {{ip}}:8443>
+  ServerName {{server_name}}:8443
+  Include conf.d/ssl.conf.include
+  SSLCertificateFile /opt/shibboleth-idp/credentials/idp.crt
+  SSLCertificateKeyFile /opt/shibboleth-idp/credentials/idp.key
+
+  CustomLog logs/idp_access_log common
+  CustomLog logs/idp_8443_request_log ssl
+  ErrorLog logs/idp_8443_error_log
+  LogLevel warn
+
+  ProxyPass /idp ajp://localhost:8009/idp retry=2
+  ProxyPassReverse /idp ajp://localhost:8009/idp
 </VirtualHost>
 
 <VirtualHost 127.0.0.1:80>
