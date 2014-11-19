@@ -16,3 +16,8 @@
   with_fileglob:
     - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/lib/*.jar
     - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/lib/jdbc/*.jar
+
+- name: Copy over JDBC connector
+  copy: >
+    src=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/lib/jdbc/optional/mysql-connector-java-5.1.25.jar
+    dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/lib
