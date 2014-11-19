@@ -30,9 +30,3 @@
 
 - name: Create /root/.my.cnf
   template: src=dot-my.cnf.j2 dest=/root/.my.cnf owner=root mode=0600
-
-- name: Create /root/my.cnf
-  template: src=my.cnf.j2 dest=/root/my.cnf owner=root mode=0600
-
-- name: Restart mariadb-server
-  service: name=mariadb state=restarted

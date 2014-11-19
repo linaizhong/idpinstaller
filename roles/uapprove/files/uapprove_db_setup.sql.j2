@@ -1,0 +1,7 @@
+CREATE DATABASE uApprove;
+CREATE USER 'uApprove'@'localhost' IDENTIFIED BY '{{ mariadb_password_output.stdout_lines[0] }}';
+GRANT INSERT, SELECT, UPDATE, DELETE ON uApprove.* TO 'uApprove'@'localhost';
+ALTER DATABASE uApprove DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+FLUSH PRIVILEGES;
+@/opt/aaf/shibsrc/uApprove-2.5.0/manual/storage/terms-of-use-schema.sql
+@/opt/aaf/shibsrc/uApprove-2.5.0/manual/storage/attribute-release-schema.sql

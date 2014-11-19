@@ -39,3 +39,20 @@
   with_items:
     - uApprove.xml
     - uApprove.properties
+
+- name: Retrieve password
+  command: cat /root/.mysql_password
+  changed_when: false
+  register: mariadb_password_output
+
+- name: Create /root/uapprove_db_setup.sql
+  template: src=uapprove_db_setup.sql.j2 dest=/root/uapprove_db_setup.sql owner=root mode=0600
+
+- name: Run /root/uapprove_db_setup.sql
+  command: 'mysql -e "source /root/uapprove_db_setup.sql"'
+
+- name: Create /root/my.cnf
+  template: src=my.cnf.j2 dest=/root/my.cnf owner=root mode=0600
+
+- name: Restart mariadb-server
+  service: name=mariadb state=restarted
