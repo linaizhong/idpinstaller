@@ -56,3 +56,6 @@
 
 - name: Restart mariadb-server
   service: name=mariadb state=restarted
+
+- name: Write new web.xml file over old one
+  template: src=web.xml.j2 dest=/opt/aaf/shibboleth-identityprovider-{{ idp_version }}/src/main/webapp/WEB-INF/web.xml
