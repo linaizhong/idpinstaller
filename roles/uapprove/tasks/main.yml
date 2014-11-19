@@ -7,7 +7,7 @@
 - name: Extract archive
   unarchive: >
     src=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}.zip
-    dest=/opt/aaf/shibsrc/uApprove-{{ uapprove_version }}
+    dest=/opt/aaf/shibsrc/
 
 - name: Copy over uApprove libraries
   copy: >
