@@ -14,5 +14,5 @@
     src={{ item }}
     dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/lib
   with_fileglob:
-    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/*.jar
-    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/jdbc/*.jar
+    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/lib/*.jar
+    - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/lib/jdbc/*.jar
