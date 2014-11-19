@@ -6,3 +6,9 @@ DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.
 DROP DATABASE test;
 DELETE FROM mysql.db WHERE Db='test' OR Db='test\_%';
 FLUSH PRIVILEGES;
+
+CREATE DATABASE uApprove;
+CREATE USER 'uApprove'@'localhost' IDENTIFIED BY '{{ mariadb_password_output.stdout_lines[0] }}';
+GRANT INSERT, SELECT, UPDATE, DELETE ON uApprove.* TO 'uApprove'@'localhost';
+ALTER DATABASE uApprove DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+FLUSH PRIVILEGES;
