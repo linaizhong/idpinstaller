@@ -121,6 +121,8 @@ Listen 8443
 <VirtualHost {{ip}}:8443>
   ServerName {{server_name}}:8443
   Include conf.d/ssl.conf.include
+  SSLCertificateFile /opt/shibboleth-idp/credentials/idp.crt
+  SSLCertificateKeyFile /opt/shibboleth-idp/credentials/idp.key
 
   CustomLog logs/idp_access_log common
   CustomLog logs/idp_8443_request_log ssl
