@@ -7,7 +7,7 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
 
-    <context:property-placeholder location="classpath:/configuration/uApprove.properties" />
+    <context:property-placeholder location="file:/opt/shibboleth-idp/conf/uApprove.properties" />
 
 
     <bean id="uApprove.touModule" class="ch.SWITCH.aai.uApprove.tou.ToUModule" init-method="initialize"
