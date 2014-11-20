@@ -63,5 +63,11 @@
 - name: Write new web.xml file over old one
   template: src=web.xml.j2 dest=/opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/src/main/webapp/WEB-INF/web.xml
 
+- name: Remove log folder deletion clause from custom install script
+  lineinfile: >
+    dest=/opt/aaf/shibsrc/install-{{ idp_version }}.sh
+    line="rmdir /opt/shibboleth-idp/logs"
+    state=absent
+
 - name: Redeploy IdP
   command: /opt/aaf/shibsrc/install-{{ idp_version }}.sh
