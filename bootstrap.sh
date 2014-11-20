@@ -18,6 +18,8 @@ LDAP_PACKAGE="other"
 
 ENTITYID=""
 
+UAPPROVE_TOU="true"
+
 # arguments are passed to this function in the following order:
 # $1 -> user friendly description of value to be set
 # $2 -> default value
@@ -68,6 +70,15 @@ user_input() {
         LDAP_CONN_TYPE=$response;;
       "entity id" )
         ENTITYID=$response;;
+      "terms of use (true/false)" )
+        result=$(validate_uapprove_tou $response)
+        if [ $result == 0 ]; then
+          UAPPROVE_TOU=$response
+        else
+          printf "Invalid value. Aborting...\n"
+          exit
+        fi
+        ;;
     esac
   else
     # defaults should be selected
@@ -94,6 +105,8 @@ user_input() {
         LDAP_CONN_TYPE=$2;;
       "entity id" )
         ENTITYID=$2;;
+      "terms of use (true/false)" )
+        UAPPROVE_TOU=$2;;
     esac
   fi
 }
@@ -116,6 +129,15 @@ validate_hostname() {
   echo 1
 }
 
+# returns 0 on valid entry. 1 otherwise
+validate_uapprove_tou() {
+  if [[ $1 == "true" || $1 == "false" ]]; then
+    echo 0
+    return
+  fi
+  echo 1
+}
+
 user_input "server name" $(hostname)
 user_input "ip address" $(ip route get 8.8.8.8 | awk '/8.8.8.8/ {print $NF}')
 user_input "environment type" "Test"
@@ -127,6 +149,7 @@ user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
 user_input "entity id" "https://$(hostname)/idp/shibboleth"
 user_input "LDAP connection type" "ldap"
+user_input "terms of use (true/false)" "true"
 
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
@@ -215,6 +238,7 @@ echo "ldap_dn: ${LDAP_DN}" >> group_vars/idp.yml
 echo "ldap_passwd: ${LDAP_PASSWD}" >> group_vars/idp.yml
 echo "ldap_conn_type: ${LDAP_CONN_TYPE}" >> group_vars/idp.yml
 echo "entity_id: ${ENTITYID}" >> group_vars/idp.yml
+echo "tou: ${UAPPROVE_TOU}" >> group_vars/idp.yml
 
 echo "### Installing your IdP... (This may take some time)" \
      | tee -a $wd/install.log
