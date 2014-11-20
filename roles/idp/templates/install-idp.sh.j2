@@ -1,6 +1,6 @@
 #!/bin/sh
 export JAVA_HOME=/usr/lib/jvm/jre-1.7.0-openjdk
 cd /opt/aaf/shibsrc/shibboleth-identityprovider-{{ idp_version }}/
-./install.sh -Dinstall.config=yes -Didp.home.input="/opt/shibboleth-idp" \
+./install.sh -Dinstall.config=no -Didp.home.input="/opt/shibboleth-idp" \
 -Didp.hostname.input="{{ server_name }}" -Didp.keystore.pass="{{ idp_storepass }}"
 rmdir /opt/shibboleth-idp/logs
