@@ -34,6 +34,10 @@
   with_fileglob:
     - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/webapp/*
 
+- name: Copy over terms-of-use.html to /opt/shibboleth-idp/conf directory
+  copy: src=terms-of-use.html dest=/opt/shibboleth-idp/conf
+  when: tou == "true"
+
 - name: Resolve mysql password
   set_fact:
     mysql_passwd: "{{ lookup('password', '/root/.mysql_password chars=letters,digits length=64') }}"
