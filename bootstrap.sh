@@ -70,7 +70,7 @@ user_input() {
         LDAP_CONN_TYPE=$response;;
       "entity id" )
         ENTITYID=$response;;
-      "terms of use (true/false)" )
+      "uApprove terms of use (true/false)" )
         result=$(validate_uapprove_tou $response)
         if [ $result == 0 ]; then
           UAPPROVE_TOU=$response
@@ -105,7 +105,7 @@ user_input() {
         LDAP_CONN_TYPE=$2;;
       "entity id" )
         ENTITYID=$2;;
-      "terms of use (true/false)" )
+      "uApprove terms of use (true/false)" )
         UAPPROVE_TOU=$2;;
     esac
   fi
@@ -149,7 +149,7 @@ user_input "LDAP distinguished name" ""
 user_input "LDAP password" ""
 user_input "entity id" "https://$(hostname)/idp/shibboleth"
 user_input "LDAP connection type" "ldap"
-user_input "terms of use (true/false)" "true"
+user_input "uApprove terms of use (true/false)" "true"
 
 printf "Confirm below values:\n"
 printf "Server name: $SERV_NAME\n"
@@ -162,6 +162,7 @@ printf "LDAP search base: $LDAP_SEARCHBASE\n"
 printf "LDAP distinguished name: $LDAP_DN\n"
 printf "LDAP connection type: $LDAP_CONN_TYPE\n"
 printf "Entity ID: $ENTITYID\n"
+printf "uApprove terms of use: $UAPPROVE_TOU\n"
 read -p "Is this correct? [y/N]: " prompt
 case $prompt in
   [yY][eE][sS]|[yY] )
