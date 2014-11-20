@@ -36,7 +36,7 @@
 
 - name: Copy over terms-of-use.html to /opt/shibboleth-idp/conf directory
   copy: src=terms-of-use.html dest=/opt/shibboleth-idp/conf
-  when: tou == "true"
+  when: tou == true
 
 - name: Resolve mysql password
   set_fact:
