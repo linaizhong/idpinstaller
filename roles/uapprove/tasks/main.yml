@@ -34,15 +34,15 @@
   with_fileglob:
     - /opt/aaf/shibsrc/uApprove-{{ uapprove_version }}/webapp/*
 
+- name: Resolve mysql password
+  set_fact:
+    mysql_passwd: "{{ lookup('password', '/root/.mysql_password chars=letters,digits length=64') }}"
+
 - name: Write uApprove.xml to /opt/shibboleth-idp/conf
   copy: src=uApprove.xml dest=/opt/shibboleth-idp/conf
 
 - name: Write uApprove.properties to /opt/shibboleth-idp/conf
   template: src=uApprove.properties.j2 dest=/opt/shibboleth-idp/conf/uApprove.properties
-
-- name: Resolve mysql password
-  set_fact:
-    mysql_passwd: "{{ lookup('password', '/root/.mysql_password' chars=letters,digits length=64') }}"
 
 - name: Create /root/uapprove_db_setup.sql
   template: src=uapprove_db_setup.sql.j2 dest=/root/uapprove_db_setup.sql owner=root mode=0600
