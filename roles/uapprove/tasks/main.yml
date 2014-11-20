@@ -40,10 +40,9 @@
     - uApprove.xml
     - uApprove.properties
 
-- name: Retrieve password
-  command: cat /root/.mysql_password
-  changed_when: false
-  register: mariadb_password_output
+- name: Resolve mysql password
+  set_fact:
+    mysql_passwd: "{{ lookup('password', '/root/.mysql_password' chars=letters,digits length=64') }}"
 
 - name: Create /root/uapprove_db_setup.sql
   template: src=uapprove_db_setup.sql.j2 dest=/root/uapprove_db_setup.sql owner=root mode=0600

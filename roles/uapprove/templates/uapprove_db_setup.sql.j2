@@ -1,5 +1,5 @@
 CREATE DATABASE uApprove;
-CREATE USER 'uApprove'@'localhost' IDENTIFIED BY '{{ mariadb_password_output.stdout_lines[0] }}';
+CREATE USER 'uApprove'@'localhost' IDENTIFIED BY '{{ mysql_passwd }}';
 GRANT INSERT, SELECT, UPDATE, DELETE ON uApprove.* TO 'uApprove'@'localhost';
 ALTER DATABASE uApprove DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 FLUSH PRIVILEGES;
